@@ -10,6 +10,8 @@ export function Register() {
     const [phone, setPhone] = useState("")
     const [birth, setBirth] = useState("")
     const [email, setEmail] = useState("")
+    const [address, setAddress] = useState("")
+    const [country, setCountry] = useState("")
     const [password, setPassword] = useState("")
 
     const handleRegister = async (e) => {
@@ -17,16 +19,19 @@ export function Register() {
         try{
             await createUserWithEmailAndPassword(auth, email, password)
             const user = auth.currentUser
-            console.log(user)
             if(user){
                 await setDoc(doc(db, "Users", user.uid), {
                     email: user.email,
+                    address: address,
+                    country: country,
                     name: name,
                     surname: surname,
                     phone: phone,
                     birth: birth,
                 })
             }
+            
+            window.location.href = "/login"
             
         }catch(error){
             console.log(error)
@@ -76,6 +81,22 @@ export function Register() {
           placeholder="Почта"
             onChange={(e) => setEmail(e.target.value)}
         />
+        <div className=""  style={{display: "flex", }}>
+            <input
+            type="address"
+            className="input-field"
+            placeholder="Адресс"
+            onChange={(e) => setAddress(e.target.value)}
+            />
+
+            <input
+            type="Country"
+            className="input-field"
+            placeholder="Страна Проживания"
+            onChange={(e) => setCountry(e.target.value)}
+            />
+        </div>
+       
         <input
           type="password"
           className="input-field"

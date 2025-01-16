@@ -1,0 +1,15 @@
+.layout-center-content{
+    width: 100%;
+    min-height: 65vh;
+    background-color: #F1F2F4;
+    border-radius: 25px;
+    padding: 30px;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+.bar{
+  background-color: #fff;
+}

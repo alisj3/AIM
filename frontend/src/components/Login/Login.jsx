@@ -1,7 +1,8 @@
 import { useState } from "react"
 import "./Login.css"
-import { signInWithEmailAndPassword } from "firebase/auth"
-import { auth } from "../../firebase/firebase"
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth"
+import { doc, setDoc} from "firebase/firestore"
+import { auth, db } from "../../firebase/firebase"
 
 export function Login(){
     
@@ -12,10 +13,26 @@ export function Login(){
         e.preventDefault()
         try{
             await signInWithEmailAndPassword(auth, email, password)
-            console.log("Logged")
+            window.location.href = "/profile"
         }catch(error){
             
         }
+    }
+
+    function googleLogin(){
+        const provider = new GoogleAuthProvider()
+        signInWithPopup(auth, provider)
+        .then(async(result) => {
+            const user = result.user
+            if(result.user){
+                await setDoc(doc(db, "Users", user.uid), {
+                    email: user.email,
+                    name: user.displayName,
+                    lastname: ""
+                })
+                window.location.href = "/profile"
+            }
+        })
     }
 
     return(
@@ -42,7 +59,7 @@ export function Login(){
 
                 <div className="social">
                     <img src="/Facebook Logo.png" alt="" />
-                    <img src="/Google Logo.png" alt="" />
+                    <img onClick={googleLogin} src="/Google Logo.png" alt="" />
                     <img src="/Apple Logo.png" alt="" />
                 </div>
             </form>

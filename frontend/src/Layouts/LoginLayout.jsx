@@ -4,7 +4,7 @@ export function LoginLayout({children}){
     return(
         <>
             <div className="main">
-                <img className="logo" src="/logo.png" alt="" />
+                <img className="logo" src="/login-logo.png" alt="" />
 
                 <div className="form-box">
                     {children}
