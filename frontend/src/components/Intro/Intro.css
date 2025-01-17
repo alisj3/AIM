@@ -1,0 +1,160 @@
+.intro{
+    opacity: 0;
+    transform: translateY(-50px);
+    animation: appear 3s ease-out forwards;
+}
+
+.intro-2{
+    
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+}
+
+.intro-3{
+    
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+}
+
+.intro{
+    text-align: center;
+}
+
+.intro h3{
+    font-size: 1em;
+    padding-top: 7vh;
+}
+
+.intro h1{
+    font-size: 4em;
+    padding-top: 7vh;
+}
+
+.intro-buttons{
+    padding-top: 7vh;
+}
+
+.intro-button{
+    width: 12%;
+    margin: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+}
+
+.intro-button:first-child{
+    background-color: #fff;
+}
+
+.intro-button:last-child{
+    background-color: #000;
+    color: #fff;
+}
+
+.intro-2{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.intro-2 h3{
+    text-align: center;
+    font-size: 2em;
+    width: 36%;
+}
+
+.intro-2 hr{
+    background-color: #000;
+    border: none;
+    height: 90%;
+    width: 16px;
+}
+
+.intro-2 img{
+    width: 36%;
+}
+
+.intro-3{
+    height: 100vh;
+    margin-bottom: 50px;
+}
+
+.intro-3 h3{
+    text-align: left;
+    font-size: 3em;
+    padding-left: 100px;
+    padding-bottom: 30vh;
+}
+
+.timeline-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .timeline {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    position: relative;
+  }
+  
+  .timeline-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+    transition: all 0.5s;
+  }
+  
+  .timeline-item p {
+    margin-top: 40px;
+    font-family: Arial, sans-serif;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: all 0.4s;
+    color: #000;
+  }
+  
+  .dot {
+    width: 24px;
+    height: 24px;
+    background-color: black;
+    border-radius: 50%;
+    transition: all 0.4s;
+    z-index: 11;
+    border: 2px solid #000;
+  }
+
+  .timeline-item:hover .dot,
+  .timeline-item:hover p {
+    transform: scale(1.4);
+    transform-origin: center;
+  }
+
+  .timeline-item:hover .dot{
+    background-color: #ffdb15;
+    border: 2px solid #000;
+  }
+  
+  .timeline::before {
+    content: "";
+    position: absolute;
+    top: 14%;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background-color: black;
+    z-index: 10;
+    transform: translateY(-50%);
+  }

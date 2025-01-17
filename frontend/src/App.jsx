@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react"
 import { auth } from "./firebase/firebase"
 import { AnalyticsPage } from "./pages/AnalyticsPage";
+import { HomePage } from "./pages/HomePage";
 
 function App() {
   // const [user, setUser] = useState()
@@ -19,6 +20,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={/*user ? <Navigate to="/profile" /> : */<HomePage />} />
           <Route path="/login" element={/*user ? <Navigate to="/profile" /> : */<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />
