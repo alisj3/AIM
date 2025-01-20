@@ -9,3 +9,22 @@
     flex-direction: column;
     align-items: center;
   }
+
+  .layout-center-content .income{
+    width: 100%;
+  }
+
+  
+  .layout-center-content p, .layout-center-content h3{
+    text-align: center;
+  }
+
+  .layout-center-content p{
+    color: #A5A5A5;
+    padding-bottom: 5px;
+    padding-top: 5px;
+  }
+
+  .layout-center-content h3{
+    font-size: 2em;
+  }

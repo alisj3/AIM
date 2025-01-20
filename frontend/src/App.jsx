@@ -8,6 +8,8 @@ import { useEffect, useState } from "react"
 import { auth } from "./firebase/firebase"
 import { AnalyticsPage } from "./pages/AnalyticsPage";
 import { HomePage } from "./pages/HomePage";
+import { SubscriptionPage } from "./pages/SubscriptionPage";
+import { NeiroStoragePage } from "./pages/NeiroStoragePage";
 
 function App() {
   // const [user, setUser] = useState()
@@ -25,6 +27,8 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/subscription" element={<SubscriptionPage />} />
+          <Route path="/neirostorage" element={<NeiroStoragePage />} />
         </Routes>
       </BrowserRouter>
     </>

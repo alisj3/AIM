@@ -1,0 +1,67 @@
+.plan{
+    max-width: 32%;
+    color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+
+    
+    box-shadow: 0px 3.78483px 94.6207px rgba(0, 0, 0, 0.25);
+    transition: all 0.4s;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.plan:hover{
+    transform:translateY(-20px) ;
+}
+
+.plan:hover .subscription-button{
+    display: block;
+}
+
+.plan-instruction{
+    color: #d8d8d8;
+}
+
+.plan-price{
+    font-size: 40px;
+    font-size: 2.3em;
+    font-weight: bold;
+}
+
+.plan-instruction{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 0.8em;
+}
+
+.plan-spec{
+    font-size: 0.9em;
+    padding-bottom: 10px;
+}
+
+.spec-list{
+    font-size: 0.8em;
+}
+
+.spec-list li{
+    padding-bottom: 10px;
+    font-size: 0.9em;
+}
+
+.subscription-button{
+    display: none;
+    background-color: #BC4749;
+    color: #fff;
+    border: 1px solid #D66567;
+    position: absolute;
+    bottom: -18px;
+    padding: 10px;
+    border-radius: 5px;
+    left: 20%;
+    right: 20%;
+
+    transition: all 0.3s;
+}

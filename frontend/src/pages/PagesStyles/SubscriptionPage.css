@@ -1,0 +1,15 @@
+.plan-basic {
+    background-color: #7D7D7D;
+}
+.plan-pro {
+    background-color: #1D252B;
+}
+.plan-individual {
+    background-color: #745B33;
+}
+
+.subscription-plans{
+    display: flex;
+    justify-content: space-between;
+    height: 70vh;
+}
