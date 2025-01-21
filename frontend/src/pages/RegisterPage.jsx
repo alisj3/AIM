@@ -1,4 +1,4 @@
-import { Register } from "../components/Register/register"
+import { Register } from "../components/Register/Register"
 import { LoginLayout } from "../Layouts/LoginLayout"
 
 export function RegisterPage(){

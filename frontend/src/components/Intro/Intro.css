@@ -35,26 +35,41 @@
 
 .intro-buttons{
     padding-top: 7vh;
+    display: flex;
+    justify-content: center;
 }
 
 .intro-button{
-    width: 12%;
     margin: 10px;
     padding-top: 20px;
     padding-bottom: 20px;
+    width: 15%;
 
     font-weight: 800;
-    border: none;
+    border: 1px solid transparent;
     cursor: pointer;
+    display: block;
+    transition: all 0.4s;
 }
 
 .intro-button:first-child{
     background-color: #fff;
+    color: #000;
+}
+
+.intro-button:first-child:hover{
+    background-color: #000;
+    color: #fff;
 }
 
 .intro-button:last-child{
     background-color: #000;
     color: #fff;
+}
+
+.intro-button:last-child:hover{
+    background-color: #fff;
+    color: #000;
 }
 
 .intro-2{

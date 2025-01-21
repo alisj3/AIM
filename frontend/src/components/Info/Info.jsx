@@ -13,8 +13,8 @@ export function Info({title, subtitle, text, image, imageText, infoTextStyles, t
                     </div>
 
                     <div style={{width: "40%"}}>
-                        <img style={{...anyStyle}} src={`/${image}.png`} alt="" />
-                        <p  className="image-text">{imageText}</p>
+                        <img className="info-image" style={{...anyStyle}} src={`/${image}.png`} alt="" />
+                        <p className="image-text">{imageText}</p>
                     </div>
                     
                 </div>

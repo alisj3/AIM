@@ -27,7 +27,6 @@
     display: flex;
     flex-direction: column;
     border-right: 1px solid #9E9E9E;
-    margin-right: 30px;
 }
 
 .table-title h1{
@@ -63,15 +62,43 @@
     text-align: center;
     padding: 10px;
 }
+
+.button-group button.active {
+    color: #000;
+    font-weight: bold;
+  }
   
 .button-group button:hover {
     color: #000;
 }
+
+.button-group .add-category {
+    background-color: transparent;
+    color: #a3a3a3;
+    border: none;
+    cursor: pointer;
+    max-width: 40px;
+
+    border-radius: 40px;
+    font-size: 1.1em;
+    margin-left: 10px;
+}
   
+.button-group .add-category:hover {
+    background-color: #a3a3a3;
+    color: #fff;
+}
+  
+.table{
+    padding: 10px;
+    width: 100%;
+    height:400px;
+    overflow-y:scroll;
+} 
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-right: 15px;
 }
   
 th, td {
@@ -83,4 +110,57 @@ th, td {
 th {
     background-color: #f4f4f4;
 }
+
+.add-data-form {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.create-product{
+    padding: 10px 30px;
+    border: 1px solid #000;
+    background-color: #000;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+
+    margin: 30px;
+    transition: all 0.4s;
+}
+
+.create-product:hover{
+    border: 1px solid #000;
+    background-color: transparent;
+    color: #000;
+}
   
+  .add-data-form h3 {
+    margin-bottom: 10px;
+  }
+  
+  .input-group input {
+    margin-right: 10px;
+    padding: 8px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .add-data-button {
+    padding: 10px 20px;
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #000;
+    cursor: pointer;
+    border-radius: 5px;
+
+    transition: all 0.3s;
+  }
+  
+  .add-data-button:hover {
+    background-color: #fff;
+    color: #000;
+  }

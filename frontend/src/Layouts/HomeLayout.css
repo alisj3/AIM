@@ -18,7 +18,7 @@ header{
     width: 10%;
 }
 
-header, nav, .social{
+header, nav, .header-social{
     display: flex;
     align-items: center;
 }
@@ -38,7 +38,7 @@ nav{
     padding-top: 10px;
 }
 
-.social{
+.header-social{
     padding-left: 5vw;
 }
 
@@ -59,4 +59,9 @@ header{
     padding: 15px;
     color: #000;
     font-weight: 700;
+    transition: all 0.4s;
+}
+
+.nav-link:hover{
+    color: #fff;
 }

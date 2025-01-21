@@ -3,13 +3,13 @@
     justify-content: space-between;
     align-items: center;
     height: 100vh;
-    background-color: #9074D0;
+    background-color: #fff;
 }
 
 .form-box{
     width: 50%;
     height: 100%;
-    background-color: #fff;
+    background-color: #000;
     display: flex;
     justify-content: center;
     align-items: center;

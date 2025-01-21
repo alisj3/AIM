@@ -48,3 +48,18 @@
     line-height: 30px;
     font-size: 1.1em;
 }
+ 
+@keyframes pulseAndRotate {
+    0% {
+        transform: scale(1) rotate(0deg);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scale(1.05) rotate(5deg);
+        filter: brightness(1.2);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        filter: brightness(1);
+    }
+}

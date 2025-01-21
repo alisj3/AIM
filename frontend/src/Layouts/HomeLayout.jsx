@@ -10,13 +10,13 @@ export function HomeLayout(){
 
                 <nav>
                     <div className="nav-inner">
-                        <a className='nav-link' href="">ГЛАВНАЯ</a>
-                        <a className='nav-link' href="">О НАС</a>
-                        <a className='nav-link' href="">НЕЙРОСКЛАД</a>
-                        <a className='nav-link' href="">СОЗНАНИЕ</a>
-                        <a className='nav-link' href="">ПОДПИСКИ</a>
+                        <Link className='nav-link' to="/">ГЛАВНАЯ</Link>
+                        <Link className='nav-link' to="/">О НАС</Link>
+                        <Link className='nav-link' to="/neirostorage">НЕЙРОСКЛАД</Link>
+                        <Link className='nav-link' to="/">СОЗНАНИЕ</Link>
+                        <Link className='nav-link' to="/subscription">ПОДПИСКИ</Link>
 
-                        <div className="social">
+                        <div className="header-social">
                             <img src="/icons/phone.png" alt="" />
                             <img src="/icons/Telegram.png" alt="" />
                         </div>
