@@ -11,6 +11,9 @@ import { HomePage } from "./pages/HomePage";
 import { SubscriptionPage } from "./pages/SubscriptionPage";
 import { NeiroStoragePage } from "./pages/NeiroStoragePage";
 
+import "./18n"
+import { Suspense } from "react";
+
 function App() {
   // const [user, setUser] = useState()
   // useEffect(() => {
@@ -20,6 +23,7 @@ function App() {
   // })
   return (
     <>
+    <Suspense fallback={<div>Loading...</div>}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={/*user ? <Navigate to="/profile" /> : */<HomePage />} />
@@ -31,6 +35,8 @@ function App() {
           <Route path="/neirostorage" element={<NeiroStoragePage />} />
         </Routes>
       </BrowserRouter>
+    </Suspense>
+      
     </>
   )
 }

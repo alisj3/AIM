@@ -1,0 +1,36 @@
+{
+    "text": "Hello",
+    "Ecosystem": "NUMERICAL ECOSYSTEM",
+    "EcosystemSubtitle": "ECOSYSTEM FOR DIGITAL OPTIONS OF CONNECTOMES AND ASSISTANTS",
+    "EcosystemDescription": "Interconnected data that will allow you to easily switch from one of our devices to another and also use all of our functionality whenever and however you want",
+
+    "NeuroStorage": "NEUROSTORAGE",
+    "NeuroStorageSubtitle": "NEURO-MANAGER CONSULTANT",
+    "NeuroStorageText": "This service allows you to replace managers with AI. Whether it is communication through social networks or instant messengers, in the future it is possible to create AI Robots that will completely replace consultants in stores",
+
+    "Conscious": "CONSCIOUS",
+    "ConsciousSubtitle": "IMAGINE YOUR CONSCIOUSNESS IN DIGITAL FORMAT",
+    "ConsciousText": "This service will allow the recreation of a person's consciousness. Implemented into connectomes and through the selection of the most informative data and its display, we propose creating a central 'web' starting from a single point and branching out to various neural networks. Each neural network has its specific task: one is responsible for memory, another for emotions (in the system, this involves regulation based on the person's character). In other words, the image of the person is described. If possible, the knowledge of this person is also integrated, and the neural network supplements this knowledge through learning.",
+    "ConsciousImageText": "GPT based example - 4o",
+
+    "JarvisSubtitle": "NEURAL ASSISTANT",
+    "JarvisText": "Do you need to delegate tasks so that the neural network can create a simple presentation for you and save it? Or for him to call your employee, friend, or loved one to tell you some important information? There's a Neuro Assistant for that.",
+    
+    "JarvisSolutions": "WHAT INNOVATIVE SOLUTIONS DO JARVIS HAVE?",
+    "JarvisSolutionsSubtitle": "WHAT WE CAN OFFER",
+    "JarvisSolutionsText": "• JARVIS is a highly intelligent neural network with connections and access to your data, allowing you to perform tasks from your TODO. If you have 'Neurowarehouse' or 'Consciousness', you can use them in any way that suits you: make JARVIS your everyday assistant or a virtual business assistant, completely adapting it to your needs.",
+    "TodoTitle": "WHAT INNOVATIVE SOLUTIONS DO TODO HAVE?",
+    "TodoSubtitle": "WHAT WE CAN OFFER",
+    "TodoText": "• Create a task for yourself, and if the neural network is capable of completing the task, you can delegate it and free up your time.  \n• Calls from the neural network thanks to Speech & Recognize Technology. \n • Creation of presentations based on Gamma, Wepick, Prezo. \n • Image creation by GPT-4. \n • Creation of video materials based on GEMINI and SORA.",
+    "JarvisPros": "BENEFITS OF THE DOCKING STATION",
+    "JarvisProsText": "• Implementation of TODO-JARVIS, which will not only communicate daily but also attach user tasks and perform them. \n • Integrated 'NeuroStorage' enabling entrepreneurs to cluster sales events, provide neural network analytics, overall product expenses, and total revenue. It can also help 'predict' the market, offering marketing advice on products.  \n • Integration of 'Consciousness,' allowing consciousness to be implemented into a DOC-Station and interact with it as if with a human.",
+
+    "DocStation": "Prototype created by AI",
+    "DocStationTitle": "DOCK STATION",
+    "DocStationPros": "BENEFITS AND FUNCTIONALITY",
+    "DocStationText": "Introducing our neural network-integrated docking station, designed for your convenience. It helps you listen to music, communicate, control your smart home, and perform everyday tasks easier and faster.",
+    
+    "inovativeSolutions": "Inovative\nSolutions",
+    "introWho": "WHO WE ARE?",
+    "introTouch": "TOUCH"
+}

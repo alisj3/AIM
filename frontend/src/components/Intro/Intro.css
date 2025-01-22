@@ -1,7 +1,7 @@
 .intro{
     opacity: 0;
     transform: translateY(-50px);
-    animation: appear 3s ease-out forwards;
+    animation: appear 3s ease-out forwards; 
 }
 
 .intro-2{

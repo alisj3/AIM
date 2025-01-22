@@ -1,16 +1,19 @@
 import './Intro.css'
 import { Link, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 export function Intro(){
+    
+    const {t, i18n} = useTranslation()
 
     return(
         <>
-            <div className='intro'>
+            <div className='intro' style={{ whiteSpace: "pre-wrap" }}>
                 <h3>AIM - COMPANY</h3>
-                <h1>Инновационные <br/> решения</h1>
+                <h1>{t("inovativeSolutions")}</h1>
                 <div className="intro-buttons">
-                    <a href='#offer' className='intro-button'>КТО МЫ?</a>
-                    <Link to="/register" className='intro-button'>ПРИКОСНУТЬСЯ</Link>
+                    <a href='#offer' className='intro-button'>{t("introWho")}</a>
+                    <Link to="/register" className='intro-button'>{t("introTouch")}</Link>
                 </div>
             </div>
 

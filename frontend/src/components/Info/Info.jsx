@@ -2,6 +2,7 @@ import "./Info.css"
 import CanvasNeuron from "../canvas/CanvasNeuron"
 
 export function Info({title, subtitle, text, image, imageText, infoTextStyles, text_allign, backGroundColor, textColor, specialTextColour, anyStyle}){
+
     return(
         <>
             <div style={{backgroundColor: `${backGroundColor}`, color: `${textColor}`}} className="info">
@@ -10,7 +11,7 @@ export function Info({title, subtitle, text, image, imageText, infoTextStyles, t
                     <div style={{width: "50%"}}>
                         <h1 style={{textAlign: `${text_allign}`}}>{title}</h1>
                         <h2 style={{textAlign: `${text_allign}`, color: `${specialTextColour}`}}>{subtitle}</h2>
-                        <p style={{paddingTop: "60px", fontWeight: "700"}}>{text}</p>
+                        <p style={{paddingTop: "60px", fontWeight: "700", whiteSpace: "pre-wrap"}}>{text}</p>
                     </div>
 
                     <div style={{width: "40%"}}>

@@ -1,7 +1,7 @@
 import './Neirostorage.css';
 import { db } from '../../firebase/firebase';
-import { collection, addDoc, arrayUnion, updateDoc, doc } from "firebase/firestore";
-import { query, where, getDocs } from "firebase/firestore";
+import { collection, doc, addDoc, setDoc, arrayUnion, updateDoc, getDocs } from "firebase/firestore";
+import { query, where } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { useState, useEffect } from 'react';
 
@@ -12,18 +12,8 @@ export function Neirostorage() {
   const [popupSeen, setPopupSeen] = useState(false);
 
   useEffect(() => {
-    const cachedCategories = localStorage.getItem('categories');
-    if (cachedCategories) {
-      setCategories(JSON.parse(cachedCategories));
-    } else {
-      fetchCategories();
-    }
+    fetchCategories();
   }, []);
-
-  useEffect(() => {
-    // Save categories to localStorage whenever they change
-    localStorage.setItem('categories', JSON.stringify(categories));
-  }, [categories]);
 
   const handleTableChange = (table) => {
     setActiveTable(table);
@@ -37,21 +27,25 @@ export function Neirostorage() {
     const auth = getAuth();
     const user = auth.currentUser;
 
+    if (!user) {
+      console.error("No user is logged in.");
+      return;
+    }
+
     try {
-      const q = query(collection(db, "Categories"), where("userId", "==", user.uid));
-      const querySnapshot = await getDocs(q);
+      const userProductsCollection = collection(db, `Users/${user.uid}/Products`);
+      const querySnapshot = await getDocs(userProductsCollection);
 
       const userCategories = [];
       querySnapshot.forEach((doc) => {
         userCategories.push({
           id: doc.id,
           name: doc.data().name,
-          products: doc.data().products || [], // Ensure products array is fetched
-          userId: doc.data().userId,
+          products: doc.data().products || [],
         });
       });
 
-      setCategories(userCategories || []);
+      setCategories(userCategories);
     } catch (e) {
       console.error("Error fetching categories:", e);
     }
@@ -60,14 +54,19 @@ export function Neirostorage() {
   const addCategory = async () => {
     const auth = getAuth();
     const user = auth.currentUser;
-    const userId = user.uid;
+
+    if (!user) {
+      console.error("No user is logged in.");
+      return;
+    }
 
     const newCategoryName = `Категория ${categories.length + 1}`;
+
     try {
-      const docRef = await addDoc(collection(db, "Categories"), {
+      const userProductsCollection = collection(db, `Users/${user.uid}/Products`);
+      const docRef = await addDoc(userProductsCollection, {
         name: newCategoryName,
         products: [],
-        userId: userId,
       });
 
       const newCategory = { id: docRef.id, name: newCategoryName, products: [] };
@@ -86,14 +85,21 @@ export function Neirostorage() {
   };
 
   const addRowToTable = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (!user) {
+      console.error("No user is logged in.");
+      return;
+    }
+
     if (!activeTable) {
       console.error("No active category selected.");
       return;
     }
 
-    const tableDocRef = doc(db, "Categories", activeTable);
-
     try {
+      const tableDocRef = doc(db, `Users/${user.uid}/Products`, activeTable);
       await updateDoc(tableDocRef, {
         products: arrayUnion({
           name: newRow[0],
@@ -106,12 +112,18 @@ export function Neirostorage() {
       setCategories((prevCategories) =>
         prevCategories.map((category) =>
           category.id === activeTable
-            ? { ...category, products: [...category.products, {
-              name: newRow[0],
-              description: newRow[1],
-              price: newRow[2],
-              currency: newRow[3],
-            }] }
+            ? {
+                ...category,
+                products: [
+                  ...category.products,
+                  {
+                    name: newRow[0],
+                    description: newRow[1],
+                    price: newRow[2],
+                    currency: newRow[3],
+                  },
+                ],
+              }
             : category
         )
       );

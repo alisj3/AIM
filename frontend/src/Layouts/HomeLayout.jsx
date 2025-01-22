@@ -1,7 +1,14 @@
 import './HomeLayout.css'
 import { Link }from "react-router-dom"
+import { useTranslation } from 'react-i18next'
 
 export function HomeLayout(){
+
+    const {t, i18n} = useTranslation()
+    
+    const changeLanguage = (language) => {
+        i18n.changeLanguage(language)
+    }
 
     return (
         <>
@@ -19,6 +26,8 @@ export function HomeLayout(){
                         <div className="header-social">
                             <img src="/icons/phone.png" alt="" />
                             <img src="/icons/Telegram.png" alt="" />
+                            <button onClick={() => changeLanguage("en")}>EN</button>
+                            <button onClick={() => changeLanguage("ru")}>RU</button>
                         </div>
                     </div>
                     

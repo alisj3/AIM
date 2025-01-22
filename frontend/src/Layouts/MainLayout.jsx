@@ -4,9 +4,15 @@ import { useEffect, useState } from 'react';
 import { auth, db } from '../firebase/firebase'; 
 import { doc, getDoc } from 'firebase/firestore';
 import { signOut } from "firebase/auth";
+import { useTranslation } from 'react-i18next'
 
 export function MainLayout({ children }) {
 
+    const {t, i18n} = useTranslation()
+
+    const changeLanguage = (language) => {
+        i18n.changeLanguage(language)
+    }
     
     const handleLogout = async () => {
         try {
@@ -103,7 +109,7 @@ export function MainLayout({ children }) {
 
                 <div className="layout-center">
                     <div className="layout-center-top">
-                        <h1>Здравствуйте, {userName || 'Гость'}</h1>
+                        <h1>{t("text")}, {userName || 'Гость'}</h1>
                         <div className="search-bar">
                             <img src="/icons/search.png" className="search-icon" />
                             <input type="text" className="search-input" placeholder="Поиск" />
@@ -124,6 +130,9 @@ export function MainLayout({ children }) {
                             <img src="/icons/account.png" alt="" />
                         </a>
                     </div>
+
+                    <button onClick={() => changeLanguage("en")}>EN</button>
+                    <button onClick={() => changeLanguage("ru")}>RU</button>
                 </div>
             </div>
         </>
