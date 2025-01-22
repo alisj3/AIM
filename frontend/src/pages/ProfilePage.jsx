@@ -5,11 +5,9 @@ import { auth, db } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
 export function ProfilePage() {
-    const [userDetails, setUserDetails] = useState(() => {
-        const storedUserDetails = localStorage.getItem('userDetails');
-        return storedUserDetails ? JSON.parse(storedUserDetails) : null;
-    });
+    const [userDetails, setUserDetails] = useState(null);  // Initial state is null
     const [isGoogleUser, setIsGoogleUser] = useState(false);
+    const [loading, setLoading] = useState(true);  // New loading state
 
     const fetchUserData = async (user) => {
         if (user) {
@@ -31,24 +29,28 @@ export function ProfilePage() {
     };
 
     useEffect(() => {
-        if (!userDetails) {
-            auth.onAuthStateChanged(async (user) => {
-                if (user) {
-                    setUserDetails(user);
-                    fetchUserData(user);
-                }
-            });
-        }
-    }, [userDetails]);
+        // Check if the user is logged in and fetch details
+        const unsubscribe = auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                fetchUserData(user);
+            } else {
+                setLoading(false);  // If no user is logged in, stop loading
+            }
+        });
+
+        return () => unsubscribe();  // Cleanup subscription on unmount
+    }, []);
 
     return (
         <MainLayout>
-            <Profile
-                country={userDetails.country}
-                address={userDetails.address}
-                birth={isGoogleUser ? userDetails.birth : userDetails.birth}
-                phone={isGoogleUser ? userDetails.phone : userDetails.phone}
-            />
+            {userDetails && (
+                <Profile
+                    country={userDetails.country}
+                    address={userDetails.address}
+                    birth={isGoogleUser ? userDetails.birth : userDetails.birth}
+                    phone={isGoogleUser ? userDetails.phone : userDetails.phone}
+                />
+            )}
         </MainLayout>
     );
 }

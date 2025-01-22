@@ -78,7 +78,7 @@ export function Login() {
             .then((result) => {
                 const user = result.user;
                 const userRef = doc(db, "Users", user.uid);
-
+    
                 getDoc(userRef).then((docSnap) => {
                     if (!docSnap.exists()) {
                         setModalOpen(true);
@@ -91,6 +91,7 @@ export function Login() {
                 console.error("Error during Google login:", error);
             });
     }
+    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -102,6 +103,13 @@ export function Login() {
 
     const handleSubmitAdditionalInfo = (e) => {
         e.preventDefault();
+
+        if (!additionalInfo.country) {
+            alert("Please select a country.");
+            return;
+        }
+
+        console.log("Selected country:", additionalInfo.country);
 
         const user = auth.currentUser;
         const userRef = doc(db, "Users", user.uid);
@@ -209,6 +217,7 @@ export function Login() {
                                 value={additionalInfo.country}
                                 onChange={handleChange}
                                 placeholder="Страна Проживания"
+                                required
                             >
                                 <option value="">Select a country</option>
                                 {countries.map((countryName, index) => (

@@ -1,4 +1,5 @@
 import "./Info.css"
+import CanvasNeuron from "../canvas/CanvasNeuron"
 
 export function Info({title, subtitle, text, image, imageText, infoTextStyles, text_allign, backGroundColor, textColor, specialTextColour, anyStyle}){
     return(

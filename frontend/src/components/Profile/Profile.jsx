@@ -1,8 +1,8 @@
 import './Profile.css'
 
+export function Profile({birth, phone, address, country}) {
 
-export function Profile({birth, phone, address, country}){
-    return(
+    return (
         <div className="layout-center-content">
             <img className='profile-picture' src="/Picture.png" alt="" />
             <p className='aboutme'>Обо мне:</p>

@@ -1,10 +1,25 @@
 import './MainLayout.css';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { auth, db } from '../firebase/firebase'; // Import your Firebase configuration
+import { auth, db } from '../firebase/firebase'; 
 import { doc, getDoc } from 'firebase/firestore';
+import { signOut } from "firebase/auth";
 
 export function MainLayout({ children }) {
+
+    
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+            localStorage.removeItem('userDetails');
+            localStorage.removeItem('categories')
+            window.location.href = "/login"; // Redirect to login page after logout
+        } catch (error) {
+            console.error("Error logging out: ", error);
+        }
+    };
+
+
     const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
     const currentPath = window.location.pathname;
 
@@ -79,7 +94,7 @@ export function MainLayout({ children }) {
                             <img src="/icons/preferences.png" alt="" />
                             Настройки
                         </a>
-                        <a href="" className="link">
+                        <a onClick={handleLogout} href="" className="link">
                             <img src="/icons/exit.png" alt="" />
                             Выйти
                         </a>

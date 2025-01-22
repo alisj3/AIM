@@ -12,8 +12,8 @@ const CanvasNeuron = () => {
 
     const dots = [];
     const maxDots = 100; // Number of dots
-    const maxDistance = 40; // Maximum distance for connecting lines
-    const dotSpeed = 3; // Speed of dot movement
+    const maxDistance = 100; // Maximum distance for connecting lines
+    const dotSpeed = 1; // Speed of dot movement
     let gradientOffset = 0; // Offset for gradient animation
     let gradient = createGradient(); // Initial gradient
 
