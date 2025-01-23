@@ -13,6 +13,8 @@ import { NeiroStoragePage } from "./pages/NeiroStoragePage";
 
 import "./18n"
 import { Suspense } from "react";
+import { PreferencesPage } from "./pages/PreferencesPage";
+import { ConsciousPage } from "./pages/ConsciousPage";
 
 function App() {
   // const [user, setUser] = useState()
@@ -33,6 +35,8 @@ function App() {
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/subscription" element={<SubscriptionPage />} />
           <Route path="/neirostorage" element={<NeiroStoragePage />} />
+          <Route path="/preferences" element={<PreferencesPage />} />
+          <Route path="/conscious" element={<ConsciousPage />} />
         </Routes>
       </BrowserRouter>
     </Suspense>

@@ -1,9 +1,11 @@
 import {Chart} from "../Charts/Chart"
 import { useEffect, useState } from "react";
 import './Analytics.css';
+import { useTranslation } from 'react-i18next'
 
 export function Analytics() {
 
+    const {t, i18n} = useTranslation()
     const [data, setdata] = useState();
 
     useEffect(() => {
@@ -28,9 +30,9 @@ export function Analytics() {
         <>
             <div className="layout-center-content">
                 <div className="income">
-                    <p>Количество дохода</p>
+                    <p>{t("AnalyticsIncome")}</p>
                     <h3>${total.toFixed(2)}</h3>
-                    <p>На этом месяце</p>
+                    <p>{t("AnalyticsThisMonth")}</p>
                     <Chart data={data}/>
                 </div>
             </div>

@@ -23,25 +23,25 @@ export function Intro(){
                 <img src="/logo.png" alt="" />
             </div>
 
-            <div className='intro-3' id='offer'>
-                <h3>ЧТО МЫ МОЖЕМ <br /> ПРЕДЛОЖИТЬ?</h3>
+            <div className='intro-3' id='offer' style={{ whiteSpace: "pre-wrap" }}>
+                <h3>{t("TimelineTitle")}</h3>
                 <div className="timeline-container">
                 <div className="timeline">
                     <Link to="/profile" className="timeline-item">
                         <div className="dot"></div>
-                        <p>Цифровая Экосистема</p>
+                        <p>{t("TimelineEcosystem")}</p>
                     </Link>
                     <Link className="timeline-item">
                         <div className="dot"></div>
-                        <p>Нейросклад</p>
+                        <p>{t("TimelineNeurostorage")}</p>
                     </Link>
                     <Link className="timeline-item">
                         <div className="dot"></div>
-                        <p>Сознание</p>
+                        <p>{t("TimelineConscious")}</p>
                     </Link>
                     <Link className="timeline-item">
                         <div className="dot"></div>
-                        <p>Док-Станция</p>
+                        <p>{t("TimelineStation")}</p>
                     </Link>
                     <Link className="timeline-item">
                         <div className="dot"></div>

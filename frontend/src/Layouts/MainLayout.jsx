@@ -4,15 +4,10 @@ import { useEffect, useState } from 'react';
 import { auth, db } from '../firebase/firebase'; 
 import { doc, getDoc } from 'firebase/firestore';
 import { signOut } from "firebase/auth";
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from "react-i18next";
 
 export function MainLayout({ children }) {
-
-    const {t, i18n} = useTranslation()
-
-    const changeLanguage = (language) => {
-        i18n.changeLanguage(language)
-    }
+    const { t, i18n } = useTranslation();
     
     const handleLogout = async () => {
         try {
@@ -59,50 +54,50 @@ export function MainLayout({ children }) {
         <>
             <div className="layout-main">
                 <div className="layout-left">
-                    <img className="layout-logo" src="/logo.png" alt="" />
+                    <Link to="/"><img className="layout-logo" src="/logo.png" alt="" /></Link>
                     <div className="nav">
                         <Link to="/profile" className={`link ${currentPath === '/profile' ? 'active' : ''}`}>
                             <img src="/icons/wallet.png" alt="" />
-                            Профиль
+                            {t("Profile")}
                         </Link>
-                        <a href="" className="link">
+                        <Link to="/conscious" className={`link ${currentPath === '/conscious' ? 'active' : ''}`}>
                             <img src="/icons/box.png" alt="" />
-                            Сознание
-                        </a>
+                            {t("MainConscuois")}
+                        </Link>
                         <Link to="/analytics" className={`link ${currentPath === '/analytics' ? 'active' : ''}`}>
                             <img src="/icons/analytics.png" alt="" />
-                            Аналитика
+                            {t("MainAnalytics")}
                         </Link>
                         <Link to="/neirostorage" className={`link ${currentPath === '/neirostorage' ? 'active' : ''}`}>
                             <img src="/icons/calendar.png" alt="" />
-                            Нейросклад
+                            {t("MainNeurostorage")}
                         </Link>
                         <Link to="/subscription" className={`link ${currentPath === '/subscription' ? 'active' : ''}`}>
                             <img src="/icons/money.png" alt="" />
-                            Подписки
+                            {t("MainSubscrition")}
                         </Link>
                         <a href="" className="link">
                             <img src="/icons/list.png" alt="" />
-                            Интергации
+                            {t("MainIntegration")}
                         </a>
                     </div>
                     <hr className="layout-line" />
                     <div className="nav">
                         <a href="" className="link">
                             <img src="/icons/info.png" alt="" />
-                            Поддержка
+                            {t("MainHelp")}
                         </a>
                         <a href="" className="link">
                             <img src="/icons/chat.png" alt="" />
-                            Контакты
+                            {t("MainContacts")}
                         </a>
-                        <a href="" className="link">
+                        <Link to="/preferences" className={`link ${currentPath === '/preferences' ? 'active' : ''}`}>
                             <img src="/icons/preferences.png" alt="" />
-                            Настройки
-                        </a>
+                            {t("MainPreferences")}
+                        </Link>
                         <a onClick={handleLogout} href="" className="link">
                             <img src="/icons/exit.png" alt="" />
-                            Выйти
+                            {t("MainExit")}
                         </a>
                     </div>
                 </div>
@@ -130,9 +125,6 @@ export function MainLayout({ children }) {
                             <img src="/icons/account.png" alt="" />
                         </a>
                     </div>
-
-                    <button onClick={() => changeLanguage("en")}>EN</button>
-                    <button onClick={() => changeLanguage("ru")}>RU</button>
                 </div>
             </div>
         </>

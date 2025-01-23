@@ -4,8 +4,11 @@ import "./Login.css";
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
+import { useTranslation } from 'react-i18next'
 
 export function Login() {
+    const {t, i18n} = useTranslation()
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -134,8 +137,8 @@ export function Login() {
 
     return (
         <div className="login">
-            <h2 className="login-h2">Здравствуйте</h2>
-            <p className="login-p">Войдите чтобы начать</p>
+            <h2 className="login-h2">{t("LoginWelcome")}</h2>
+            <p className="login-p">{t("LoginSubtitle")}</p>
 
             <form className="login-form" onSubmit={handleLogin}>
                 <input
@@ -147,17 +150,17 @@ export function Login() {
                 <input
                     type="password"
                     className="input-field"
-                    placeholder="Пароль"
+                    placeholder={t("LoginPassword")}
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <input
                     type="password"
                     className="input-field"
-                    placeholder="Подтвердите Пароль"
+                    placeholder={t("LoginCheckPassword")}
                 />
-                <button className="login-button">Войти</button>
-                <Link to="/register" className="forgot-password">Нет аккаунта?</Link>
-                <p className="login-p-2">или</p>
+                <button className="login-button">{t("LoginEnter")}</button>
+                <Link to="/register" className="forgot-password">{t("LoginNoAccount")}?</Link>
+                <p className="login-p-2">{t("LoginOr")}</p>
 
                 <div className="social">
                     <img src="/Facebook Logo.png" alt="" />

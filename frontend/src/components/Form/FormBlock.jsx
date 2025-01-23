@@ -1,6 +1,10 @@
 import "./FormBlock.css"
+import { useTranslation } from 'react-i18next'
 
 export function FormBlock(){
+    
+    const {t, i18n} = useTranslation()
+
     return (
         <>
             <div className='intro-2'>
@@ -11,26 +15,26 @@ export function FormBlock(){
                             className="form-input"
                             type="email"
                             name="email"
-                            placeholder="Введите ваш email"
+                            placeholder={t("FormEmail")}
                             required
                             />
                             <input
                             className="form-input"
                             type="text"
                             name="name"
-                            placeholder="Введите ваше имя"
+                            placeholder={t("FormName")}
                             required/>
                             <textarea
                             className="form-area"
                             name="message"
-                            placeholder="Введите сообщение"
+                            placeholder={t("FormMessage")}
                             required
                             />
                         <button
                         className="form-button"
                         type="submit"
                         >
-                        Отправить
+                        {t("FormSend")}
                         </button>
                     </form>
                 </div>
@@ -38,7 +42,7 @@ export function FormBlock(){
 
                 <div className="formblock-content">
                     <img src="/logo.png" alt="" />
-                    <h4>Адреса и прочее</h4>
+                    <h4>{t("FormAddress")}</h4>
                 </div>
             </div>
         </>

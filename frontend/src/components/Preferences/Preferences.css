@@ -1,0 +1,255 @@
+.preferences-window{
+    display: none;
+}
+
+.preferences-core, .preferences-card, .preferences-security{
+    display: block;
+}
+
+.preferences-navigation{
+    display: flex;
+    justify-content: center;
+}
+
+.active-button{
+    border-bottom: 2px solid #000000 !important;
+}
+
+.preferences-navigation button{
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: transparent;
+    padding: 3px 10px;
+    border: 2px solid transparent;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.preferences-window{
+    width: 100%;
+    padding: 30px;
+}
+
+.preferences-window{
+    color: #1E293B;
+}
+
+.core-instruction{
+    display: flex;
+    align-items: start;
+}
+
+.core-instruction p{
+    width: 40%;
+    padding-left: 5px;
+}
+
+.preferences-core h3{
+    padding-right: 30px;
+    padding-bottom: 20px;
+}
+
+.core-item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px;
+    font-weight: 600;
+}
+
+.core-h2{
+    padding-top: 50px;
+}
+
+.notification-item{
+    display: flex;
+    align-items: start;
+    padding: 15px 0px;
+}
+
+.notification-item label{
+    font-weight: 800;
+}
+
+.notification-item input{
+    padding-top: 10px;
+}
+
+.notification-item input[type="checkbox"]{
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 40%;
+    border: 1px solid #CBD5E1;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.notification-item input[type="checkbox"]:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.notification-item input[type="checkbox"]:checked::after {
+    content: "✔";
+    color: #fff;
+    font-size: 14px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.notification-item div{
+    padding-left: 10px;
+}
+
+
+.switch { 
+    position : relative ;
+    display : inline-block;
+    width : 40px;
+    height : 24px;
+    background-color: #eee;
+    border-radius: 20px;
+}
+
+.switch::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: white;
+    top: 2px;
+    left: 2px;
+    transition: all 0.3s;
+}
+
+.checkbox:checked + .switch::after {
+    left : 18px; 
+}
+.checkbox:checked + .switch {
+    background-color: #000000;
+}
+
+.checkbox { 
+    display : none;
+}
+
+.security-instruction{
+    display: flex;
+    align-items: center;
+    padding-bottom: 50px;
+}
+
+.security-instruction img{
+    padding: 10px;
+}
+
+.security-item{
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.security-item p, .security-last-enter p{
+    font-weight: 700;
+}
+
+.change-password-btn{
+    color: #0B69FF;
+}
+
+.number-btn{
+    color: #000;
+}
+
+.security-last-enter{
+    padding: 20px;
+}
+
+.security-last-enter p{
+    padding-bottom: 20px;
+}
+
+.security-group hr{
+    border: 1px solid #CFD8DC;
+}
+
+.preferences-instruction{
+    display: flex;
+    align-items: start;
+}
+
+.preferences-instruction img{
+    padding: 0px 10px;
+}
+
+.preferences-instruction p{
+    width: 50%;
+}
+
+.auto-payment{
+    display: flex;
+}
+
+.auto-payment div{
+    padding: 5px;
+}
+
+.card-info{
+    padding: 40px 20px;
+    border: 1px solid #CFD8DC;
+    border-radius: 20px;
+}
+
+.card-rest h4{
+    padding-top: 20px;
+    padding-bottom: 10px;
+}
+
+.card-rest input{
+    width: 100%;
+    padding: 17px;
+    border-radius: 30px;
+    border: 1px solid #CFD8DC;
+}
+
+.card-save{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20px;
+}
+
+.card-button{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.card-cancel{
+    background-color: transparent;
+    border: 2px solid #CBD5E1;
+    color: #475569;
+    font-weight: 600;
+}
+
+.card-cancel span{
+    padding-right: 5px;
+}
+
+.card-infosave{
+    background-color: #000;
+    border: 2px solid #000000;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.card-infosave span{
+    padding-right: 5px;
+}

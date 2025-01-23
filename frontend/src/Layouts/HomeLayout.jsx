@@ -5,10 +5,6 @@ import { useTranslation } from 'react-i18next'
 export function HomeLayout(){
 
     const {t, i18n} = useTranslation()
-    
-    const changeLanguage = (language) => {
-        i18n.changeLanguage(language)
-    }
 
     return (
         <>
@@ -17,17 +13,15 @@ export function HomeLayout(){
 
                 <nav>
                     <div className="nav-inner">
-                        <Link className='nav-link' to="/">ГЛАВНАЯ</Link>
-                        <Link className='nav-link' to="/">О НАС</Link>
-                        <Link className='nav-link' to="/neirostorage">НЕЙРОСКЛАД</Link>
-                        <Link className='nav-link' to="/">СОЗНАНИЕ</Link>
-                        <Link className='nav-link' to="/subscription">ПОДПИСКИ</Link>
+                        <Link className='nav-link' to="/">{t("Home")}</Link>
+                        <Link className='nav-link' to="/">{t("AboutUs")}</Link>
+                        <Link className='nav-link' to="/neirostorage">{t("NeuroStorage")}</Link>
+                        <Link className='nav-link' to="/">{t("Conscious")}</Link>
+                        <Link className='nav-link' to="/subscription">{t("Subscriptions")}</Link>
 
                         <div className="header-social">
                             <img src="/icons/phone.png" alt="" />
                             <img src="/icons/Telegram.png" alt="" />
-                            <button onClick={() => changeLanguage("en")}>EN</button>
-                            <button onClick={() => changeLanguage("ru")}>RU</button>
                         </div>
                     </div>
                     

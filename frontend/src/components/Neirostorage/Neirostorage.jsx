@@ -4,8 +4,11 @@ import { collection, doc, addDoc, setDoc, arrayUnion, updateDoc, getDocs } from 
 import { query, where } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next'
 
 export function Neirostorage() {
+  const {t, i18n} = useTranslation()
+
   const [categories, setCategories] = useState([]);
   const [activeTable, setActiveTable] = useState('');
   const [newRow, setNewRow] = useState(['', '', '', '']);
@@ -138,13 +141,13 @@ export function Neirostorage() {
   return (
     <div className="neirostorage">
       <div className="neirostorage-title">
-        <h1>Нейросклад</h1>
-        <p>Создавайте товары и управляйте своим бизнесом</p>
+        <h1>{t("MainNeurostorage")}</h1>
+        <p>{t("NeurostorageSubtitle")}</p>
       </div>
 
       <div className="neirostorage-container">
         <div className="table-title">
-          <h1>Категории</h1>
+          <h1>{t("NeurostorageCategiries")}</h1>
           <div className="button-group">
             {categories.map((category) => (
               <button
@@ -173,10 +176,10 @@ export function Neirostorage() {
                 <table>
                   <thead>
                     <tr>
-                      <th>Наименование Товара</th>
-                      <th>Описание</th>
-                      <th>Цена</th>
-                      <th>Валюта</th>
+                      <th>{t("ProductName")}</th>
+                      <th>{t("ProductDescription")}</th>
+                      <th>{t("ProductPrice")}</th>
+                      <th>{t("ProductCurency")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -191,7 +194,7 @@ export function Neirostorage() {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="4">Нет товаров в этой категории.</td>
+                        <td colSpan="4">{t("ProductNo")}</td>
                       </tr>
                     )}
                   </tbody>
@@ -199,42 +202,42 @@ export function Neirostorage() {
 
                 {popupSeen ? (
                   <div className="add-data-form">
-                    <h3>Добавить данные</h3>
+                    <h3>{t("ProductAddData")}</h3>
                     <div className="input-group">
                       <input
                         type="text"
-                        placeholder="Наименование"
+                        placeholder={t("ProductName")}
                         value={newRow[0]}
                         onChange={(e) => handleInputChange(0, e.target.value)}
                       />
                       <input
                         type="text"
-                        placeholder="Описание"
+                        placeholder={t("ProductDescription")}
                         value={newRow[1]}
                         onChange={(e) => handleInputChange(1, e.target.value)}
                       />
                       <input
                         type="text"
-                        placeholder="Цена"
+                        placeholder={t("ProductPrice")}
                         value={newRow[2]}
                         onChange={(e) => handleInputChange(2, e.target.value)}
                       />
                       <input
                         type="text"
-                        placeholder="Валюта"
+                        placeholder={t("ProductCurency")}
                         value={newRow[3]}
                         onChange={(e) => handleInputChange(3, e.target.value)}
                       />
                     </div>
                     <button className="add-data-button" onClick={addRowToTable}>
-                      Добавить
+                      {t("ProductAdd")}
                     </button>
                   </div>
                 ) : null}
               </div>
             ) : null
           )}
-          <button className='create-product' onClick={togglePop}>Создать Товар</button>
+          <button className='create-product' onClick={togglePop}>{t("ProductCreate")}</button>
         </div>
       </div>
     </div>

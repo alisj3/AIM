@@ -1,17 +1,20 @@
 import { MainLayout } from "../Layouts/MainLayout";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { auth, db } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { Plan } from "../components/Plan/Plan";
 import './PagesStyles/SubscriptionPage.css'
-
-const plans = [
-    { SubscriptionTitle: "Базовый", SubscriptionPrice: 20, SubscriptionPercs: ["Доступ к 500 диалогам", "Создание ботов 5 шт", "Базовый доступ к сознанию"], className: "plan-basic" },
-    { SubscriptionTitle: "Про", SubscriptionPrice: 50, SubscriptionPercs: ["Доступ к 1000 диалогам", "Создание ботов 10 шт", "Нет ограничения промпта для создания", "Аналитика", "Платная тех.поддержка", "Автоматические процессы"], className: "plan-pro" },
-    { SubscriptionTitle: "Индивидуальный", SubscriptionPrice: 120, SubscriptionPercs: ["Неограниченные диалоги", "Неограниченные боты", "Нет ограничения промпта для создания", "Платная тех.поддержка", "Автоматические процессы", "Аналитика"], className: "plan-individual" },
-];
+import { useTranslation } from 'react-i18next'
 
 export function SubscriptionPage() {
+
+    const {t, i18n} = useTranslation()
+
+    const plans = [
+        { SubscriptionTitle: t("PlanOne"), SubscriptionPrice: 20, SubscriptionPercs: [t("PlanOnePercsOne"), t("PlanTwoPercsOne"), t("PlanThreePercsOne")], className: "plan-basic" },
+        { SubscriptionTitle: t("PlanTwo"), SubscriptionPrice: 50, SubscriptionPercs: [t("PlanTwoPercsOne"), t("PlanTwoPercsTwo"), t("PlanTwoPercsThree"), t("PlanTwoPercsFour"), t("PlanTwoPercsFive"), t("PlanTwoPercsSix")], className: "plan-pro" },
+        { SubscriptionTitle: t("PlanThree"), SubscriptionPrice: 120, SubscriptionPercs: [t("PlanThreePercsOne"), t("PlanThreePercsTwo"), t("PlanThreePercsThree"), t("PlanThreePercsFour"), t("PlanThreePercsFive"), t("PlanThreePercsSix")], className: "plan-individual" },
+    ];
 
     return (
         <MainLayout>

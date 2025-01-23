@@ -1,6 +1,10 @@
 import './Plan.css'
+import { useTranslation } from 'react-i18next'
 
 export function Plan({ SubscriptionTitle, SubscriptionPrice, SubscriptionPercs = [], anyStyle }) {
+    
+    const {t, i18n} = useTranslation()
+
     return (
         <div className={`plan ${anyStyle?.className || ""}`}>
             <div className="plan-info">
@@ -13,7 +17,7 @@ export function Plan({ SubscriptionTitle, SubscriptionPrice, SubscriptionPercs =
                         <span className="sup">$</span>
                         <span className="plan-price">{SubscriptionPrice}</span>
                     </span>
-                    <span style={{ color: "#d8d8d8", paddingBottom: "10px" }}>/месяц</span>
+                    <span style={{ color: "#d8d8d8", paddingBottom: "10px" }}>/{t("PlanMonth")}</span>
                 </span>
 
                 {/* Divider */}
@@ -21,11 +25,11 @@ export function Plan({ SubscriptionTitle, SubscriptionPrice, SubscriptionPercs =
 
                 {/* Description */}
                 <p className="plan-instruction">
-                    Возьмите плановую подписку на сервис чтобы работать не ограничиваясь
+                    {t("PlanInstruction")}
                 </p>
 
                 {/* Features Section */}
-                <h3 className="plan-spec">Особенности</h3>
+                <h3 className="plan-spec">{t("PlanFeature")}</h3>
                 <ul className="spec-list">
                     {SubscriptionPercs.length > 0 ? (
                         SubscriptionPercs.map((perc, index) => (
@@ -38,7 +42,7 @@ export function Plan({ SubscriptionTitle, SubscriptionPrice, SubscriptionPercs =
             </div>
 
             {/* Button */}
-            <button className="subscription-button">Начать</button>
+            <button className="subscription-button">{t("PlanStart")}</button>
         </div>
     );
 }
