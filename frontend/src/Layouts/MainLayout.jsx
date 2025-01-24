@@ -83,14 +83,14 @@ export function MainLayout({ children }) {
                     </div>
                     <hr className="layout-line" />
                     <div className="nav">
-                        <a href="" className="link">
+                        <Link to="/support" className={`link ${currentPath === '/support' ? 'active' : ''}`}>
                             <img src="/icons/info.png" alt="" />
                             {t("MainHelp")}
-                        </a>
-                        <a href="" className="link">
+                        </Link>
+                        <Link to="/contacts" className={`link ${currentPath === '/contacts' ? 'active' : ''}`}>
                             <img src="/icons/chat.png" alt="" />
                             {t("MainContacts")}
-                        </a>
+                        </Link>
                         <Link to="/preferences" className={`link ${currentPath === '/preferences' ? 'active' : ''}`}>
                             <img src="/icons/preferences.png" alt="" />
                             {t("MainPreferences")}
@@ -104,26 +104,24 @@ export function MainLayout({ children }) {
 
                 <div className="layout-center">
                     <div className="layout-center-top">
-                        <h1>{t("text")}, {userName || 'Гость'}</h1>
                         <div className="search-bar">
                             <img src="/icons/search.png" className="search-icon" />
                             <input type="text" className="search-input" placeholder="Поиск" />
                         </div>
                     </div>
-                    {children}
+                    <div className="layout-content">
+                        {children}    
+                    </div>
+                    
                 </div>
 
                 <div className="layout-right">
                     <div className="layout-icons">
-                        <a href="" className="layout-icon">
-                            <img src="/icons/message.png" alt="" />
-                        </a>
-                        <a href="" className="layout-icon">
-                            <img src="/icons/notifications.png" alt="" />
-                        </a>
-                        <a href="" className="layout-icon">
+                        <a href="" className="layout-icon"><img src="/icons/notification-bing.png" alt="" /></a>
+                        <div className="layout-right-account">
                             <img src="/icons/account.png" alt="" />
-                        </a>
+                            <h3>{userName}</h3>
+                        </div>
                     </div>
                 </div>
             </div>

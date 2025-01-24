@@ -1,40 +1,38 @@
-import { Preferences } from '../components/Preferences/Preferences'
-import {MainLayout} from '../Layouts/MainLayout'
+import { Preferences } from '../components/Preferences/Preferences';
+import { MainLayout } from '../Layouts/MainLayout';
 import { useEffect, useState } from "react";
-import { auth, db } from "../firebase/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { auth } from "../firebase/firebase";
 
-export function PreferencesPage(){
+export function PreferencesPage() {
     const [userDetails, setUserDetails] = useState(null);
 
-    const fetchUserData = async (user) => {
-        if (user) {
-            const docRef = doc(db, "Users", user.uid);
-            const docSnap = await getDoc(docRef);
-            
-            if (docSnap.exists()) {
-                const userData = docSnap.data();
-                setUserDetails(userData);
-                localStorage.setItem('userDetails', JSON.stringify(userData));
-            }
-        }
-    }
-
     useEffect(() => {
-            const unsubscribe = auth.onAuthStateChanged(async (user) => {
+        // Check if userDetails exist in localStorage
+        const storedUserDetails = localStorage.getItem("userDetails");
+
+        if (storedUserDetails) {
+            // Use the data from localStorage if available
+            setUserDetails(JSON.parse(storedUserDetails));
+        } else {
+            // Fetch user data from auth and handle the case where localStorage is empty
+            const unsubscribe = auth.onAuthStateChanged((user) => {
                 if (user) {
-                    fetchUserData(user);
-                } else {
-                    setLoading(false);
+                    // No need to fetch from Firestore here, we assume no data is cached
+                    console.log("No localStorage data found, but user is logged in.");
                 }
             });
-    
-            return () => unsubscribe();
-        }, []);
 
-    return(
+            return () => unsubscribe();
+        }
+    }, []);
+
+    return (
         <MainLayout>
-            <Preferences phone={userDetails.phone}  email={userDetails.email}/>
+            {userDetails ? (
+                <Preferences phone={userDetails.phone} email={userDetails.email} />
+            ) : (
+                <div>Loading...</div>
+            )}
         </MainLayout>
-    )
+    );
 }

@@ -15,14 +15,10 @@ import "./18n"
 import { Suspense } from "react";
 import { PreferencesPage } from "./pages/PreferencesPage";
 import { ConsciousPage } from "./pages/ConsciousPage";
+import { SupportPage } from "./pages/SupportPage";
+import { ContactsPage } from "./pages/ContactsPage";
 
 function App() {
-  // const [user, setUser] = useState()
-  // useEffect(() => {
-  //   auth.onAuthStateChanged((user) => {
-  //     setUser(user)
-  //   })
-  // })
   return (
     <>
     <Suspense fallback={<div>Loading...</div>}>
@@ -37,6 +33,8 @@ function App() {
           <Route path="/neirostorage" element={<NeiroStoragePage />} />
           <Route path="/preferences" element={<PreferencesPage />} />
           <Route path="/conscious" element={<ConsciousPage />} />
+          <Route path="/support" element={<SupportPage />} />
+          <Route path="/contacts" element={<ContactsPage />} />
         </Routes>
       </BrowserRouter>
     </Suspense>

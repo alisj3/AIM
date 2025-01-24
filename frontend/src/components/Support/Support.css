@@ -1,0 +1,79 @@
+.support h1,.support p{
+    text-align: center;
+}
+
+.support p{
+    color: #151439;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+.support-form{
+    background-color: #fafafa;
+    padding: 30px 80px;
+    border-radius: 10px;
+}
+
+.support-form h3{
+    font-size: 0.9em;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 10px;
+}
+
+.support-form input, textarea{
+    width: 100%;
+    border: 2px solid #EBEAED;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 1.1em;
+}
+
+.support-form textarea{
+    height: 200px;
+}
+
+.support-name-input{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.name-input-text{
+    max-width: 70%;
+}
+
+.name-input-submit{
+    max-width: 26%;
+    background-color: #000;
+    color: #fff;
+    transition: all 0.4s;
+    cursor: pointer;
+}
+
+.name-input-submit:hover{
+    background-color: #fff;
+    color: #000;
+}
+
+.support-textarea{
+    position: relative;
+}
+
+.file-upload-button{
+    position: absolute;
+    right: 1vw;
+    bottom: 1vw;
+    border: none;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+}
+
+.file-upload-button span{
+    padding-right: 5px;
+}
+
+.file-upload-button:hover{
+    cursor: pointer;
+}

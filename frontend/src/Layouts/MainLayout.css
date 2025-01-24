@@ -54,14 +54,19 @@ body{
 
 .layout-center-top{
     display: flex;
-    justify-content: space-between;
-    padding-bottom: 50px;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    border-bottom: 2px solid #E6E6E6;
 }
 
 .layout-center{
-    width: 80%;
-    padding: 20px;
-    padding-right: 5vw;
+    width: 100%;
+}
+
+.layout-content{
+    padding: 30px;
 }
 
 .search-bar {
@@ -70,7 +75,7 @@ body{
     border-radius: 15px;
     max-height: 50px;
     padding: 5px 10px;
-    max-width: 50rem;
+    width: 80%;
     background-color: #F5F5F5;
   }
   
@@ -101,3 +106,26 @@ body{
   .search-icon:hover {
     opacity: 1;
   }
+
+.layout-right-account{
+    display: flex;
+    align-items: center;
+    border: 2px solid #9D9594;
+    padding: 2px;
+    border-radius: 50px;
+}
+
+.layout-right-account img{
+    padding-right: 10px;
+}
+
+.layout-right-account h3{
+    color: #9D9594;
+    padding-right: 10px;
+}
+
+.layout-icons{
+    padding: 25px 40px;
+    display: flex;
+    align-items: center;
+}

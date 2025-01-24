@@ -1,10 +1,46 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import "./Preferences.css";
+import { getAuth } from "firebase/auth";
+import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
 
 export function Preferences({ phone, email }) {
   const { t, i18n } = useTranslation();
   const [activePref, setActivePref] = useState("core");
+  const [cardNumber, setCardNumber] = useState('');
+  const [cardOwner, setCardOwner] = useState('');
+  const [lastLoginTime, setLastLoginTime] = useState(null);
+
+  const addCardInfo = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    try {
+      const userInfoCollection = collection(db, `Users/${user.uid}/Card`);
+      const docRef = await addDoc(userInfoCollection, {
+        cardNumber: cardNumber,
+        cardOwner: cardOwner,
+      });
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
+  const fetchLastLoginTime = async () => {
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user) {
+      const userDocRef = doc(db, "Users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+      if (userDoc.exists()) {
+        const data = userDoc.data();
+        if (data.lastLogin) {
+          setLastLoginTime(data.lastLogin.toDate().toLocaleString());
+        }
+      }
+    }
+  };
 
   const handleProfWindow = (windowName) => {
     setActivePref(windowName);
@@ -24,6 +60,7 @@ export function Preferences({ phone, email }) {
     if (savedLanguage) {
       i18n.changeLanguage(savedLanguage);
     }
+    fetchLastLoginTime();  // Fetch last login time when the component mounts
   }, [i18n]);
 
   return (
@@ -55,14 +92,14 @@ export function Preferences({ phone, email }) {
             <div className="preferences-window preferences-core">
               <div className="core-instruction">
                 <h3>{t("generalSettingsTitle")}</h3>
-                <img src="/icons/question.png" alt="" />
+                <img src="/icons/question.png" alt="" title="als" />
                 <p>{t("notificationAndThemeSettingsDescription")}</p>
               </div>
               <h3 className="core-h2">{t("basicSettingsHeader")}</h3>
               <div className="preferences-group">
                 <div className="core-item">
                   <label>{t("darkThemeSettingLabel")}</label>
-                  <input type="checkbox" className="checkbox" id="toggle"/>
+                  <input type="checkbox" className="checkbox" id="toggle" />
                   <label htmlFor="toggle" className="switch"></label>
                 </div>
                 <div className="core-item">
@@ -121,7 +158,7 @@ export function Preferences({ phone, email }) {
                 <div className="card-info">
                   <div className="auto-payment">
                     <div>
-                      <input type="checkbox" className="checkbox" id="toggle"/>
+                      <input type="checkbox" className="checkbox" id="toggle" />
                       <label htmlFor="toggle" className="switch"></label>
                     </div>
                     <div>
@@ -131,7 +168,7 @@ export function Preferences({ phone, email }) {
                   </div>
                   <div className="auto-payment">
                     <div>
-                      <input type="checkbox" className="checkbox" id="toggle-2"/>
+                      <input type="checkbox" className="checkbox" id="toggle-2" />
                       <label htmlFor="toggle-2" className="switch"></label>
                     </div>
                     <div>
@@ -143,11 +180,11 @@ export function Preferences({ phone, email }) {
                   <div className="card-rest">
                     <div className="card-number">
                       <h4>{t("cardNumberLabel")}</h4>
-                      <input type="text" />
+                      <input type="text" onChange={(e) => setCardNumber(e.target.value)} placeholder="Введите номер карты" />
                     </div>
                     <div className="card-owner">
                       <h4>{t("cardOwnerLabel")}</h4>
-                      <input type="text" />
+                      <input type="text" onChange={(e) => setCardOwner(e.target.value)} placeholder="Полное имя" />
                     </div>
                     <div className="card-owner">
                       <h4>{t("countryLabel")}</h4>
@@ -162,7 +199,7 @@ export function Preferences({ phone, email }) {
                       <path d="M18 6L6 18M6 6l12 12"></path>
                     </svg>
                   </button>
-                  <button className="card-button card-infosave">
+                  <button onClick={addCardInfo} className="card-button card-infosave">
                     <span>{t("saveButtonLabel")}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 13l4 4L19 7"></path>
@@ -195,7 +232,7 @@ export function Preferences({ phone, email }) {
 
                   <div className="security-item">
                     <p>{t("twoFactorAuthenticationLabel")}</p>
-                    <input type="checkbox" className="checkbox" id="toggle"/>
+                    <input type="checkbox" className="checkbox" id="toggle" />
                     <label htmlFor="toggle" className="switch"></label>
                   </div>
                   <div className="security-item">
@@ -206,9 +243,14 @@ export function Preferences({ phone, email }) {
                   <hr />
 
                   <div className="security-last-enter">
-                    <p>{t("lastLoginDetailsHeader")}</p>
-                    <span>{t("lastLoginInfoText")}</span>
+                    <p>Last Login Details</p>
+                    {lastLoginTime ? (
+                      <span>Last Login: {lastLoginTime}</span>
+                    ) : (
+                      <span>Loading Last Login...</span>
+                    )}
                   </div>
+
                 </div>
               </div>
             </div>
