@@ -37,8 +37,7 @@ function App() {
           <Route path="/contacts" element={<ContactsPage />} />
         </Routes>
       </BrowserRouter>
-    </Suspense>
-      
+    </Suspense>      
     </>
   )
 }

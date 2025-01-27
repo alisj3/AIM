@@ -12,8 +12,12 @@ import {
   deleteDoc
 } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import { useTranslation } from "react-i18next";
 
 export function Conscious() {
+  
+    const { t } = useTranslation();
+
   const [botCategories, setBotCategories] = useState([]);
   const [activeBotCategory, setActiveBotCategory] = useState('');
   const [showAddCategoryPopup, setShowAddCategoryPopup] = useState(false);
@@ -352,337 +356,338 @@ export function Conscious() {
 
   return (
     <div className="bot-creation">
-      <div className="bot-creation-header">
-        <h1>Сознание</h1>
-        <p>Создайте свое исскуственное сознание</p>
-      </div>
-      <div className="bot-creation-content">
-        <div className="bot-category-selection">
-          <h1>Категории Ботов</h1>
-          <div className="category-button-group">
-            {botCategories.length === 0 && (
-              <p style={{ textAlign: 'center', color: '#9e9e9e' }}>Нет категорий</p>
-            )}
-            {botCategories.map((category) => (
-              <div
-                key={category.id}
-                style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}
-              >
-                <button
-                  className={activeBotCategory === category.id ? 'active' : ''}
-                  onClick={() => setActiveBotCategory(category.id)}
-                  style={{ flex: 1 }}
-                >
-                  {category.name}
-                </button>
-                <span
-                  style={{
-                    cursor: 'pointer',
-                    marginLeft: '5px',
-                    color: 'gray',
-                    fontSize: '1.3em'
-                  }}
-                  onClick={() => handleDeleteCategoryClick(category)}
-                  title="Удалить категорию"
-                >
-                  -
-                </span>
-                <span
-                  style={{
-                    cursor: 'pointer',
-                    marginLeft: '10px',
-                    color: 'gray',
-                    fontSize: '1.3em'
-                  }}
-                  onClick={() => handleEditCategoryClick(category)}
-                  title="Редактировать категорию"
-                >
-                  ✎
-                </span>
-              </div>
-            ))}
-            <button className="category-add-btn" onClick={openAddCategoryPopup}>
-              +
-            </button>
-          </div>
-        </div>
-        <div className="bot-table">
-          <div className="search-bar bot-search">
-            <img src="/icons/search.png" className="search-icon" alt="search" />
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Поиск"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-          {searchTerm ? (
-            <div className="search-results-box">
-              {filteredBots.length > 0 ? (
-                filteredBots.map((bot, index) => (
-                  <p key={index} style={{ margin: '5px 0', color: '#333' }}>
-                    {bot.catName} → {bot.botName} ({bot.token})
-                  </p>
-                ))
-              ) : (
-                <p style={{ color: '#555' }}>Ничего не найдено</p>
-              )}
-            </div>
-          ) : (
-            botCategories.map((category) =>
-              activeBotCategory === category.id ? (
-                <div key={category.id} className="category-table">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Название Сознания</th>
-                        <th>Описание</th>
-                        <th>Токен/Месенджер</th>
-                        <th>База</th>
-                        <th>Действия</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {category.bots.map((bot, index) => {
-                        const shortDesc =
-                          bot.botDescription && bot.botDescription.length > 20
-                            ? bot.botDescription.slice(0, 20) + '...'
-                            : bot.botDescription || '—';
-                        const shortBase =
-                          bot.base && bot.base.length > 20
-                            ? bot.base.slice(0, 20) + '...'
-                            : bot.base || '—';
-                        return (
-                          <tr key={index}>
-                            <td>{bot.botName || '—'}</td>
-                            <td>
-                              {shortDesc}{' '}
-                              {bot.botDescription && bot.botDescription.length > 20 && (
-                                <span
-                                  className="show-details-icon"
-                                  onClick={() =>
-                                    openDetailPopup('Полное описание', bot.botDescription)
-                                  }
-                                >
-                                  📝
-                                </span>
-                              )}
-                            </td>
-                            <td>{bot.token || '—'}</td>
-                            <td>
-                              {shortBase}{' '}
-                              {bot.base && bot.base.length > 20 && (
-                                <span
-                                  className="show-details-icon"
-                                  onClick={() => openDetailPopup('Полная база', bot.base)}
-                                >
-                                  📝
-                                </span>
-                              )}
-                            </td>
-                            <td>
-                              <span
-                                className="delete-bot-icon"
-                                onClick={() => handleDeleteBotClick(category.id, bot)}
-                                title="Удалить бота"
-                              >
-                                -
-                              </span>
-                              <span
-                                className="edit-bot-icon"
-                                onClick={() => handleEditBotClick(category.id, bot)}
-                                title="Редактировать бота"
-                              >
-                                ✎
-                              </span>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                  {category.bots.length === 0 && (
-                    <p style={{ textAlign: 'center', color: '#9e9e9e' }}>Нет ботов</p>
-                  )}
-                </div>
-              ) : null
-            )
-          )}
-          {activeBotCategory && !searchTerm && (
-            <button className="create-bot-btn" onClick={openAddBotPopup}>
-              Создать Бота
-            </button>
-          )}
-        </div>
-      </div>
-      {showAddCategoryPopup && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            <h2>Создать категорию</h2>
-            <input
-              type="text"
-              placeholder="Название категории"
-              value={newCategoryName}
-              onChange={(e) => setNewCategoryName(e.target.value)}
-            />
-            <div className="popup-buttons">
-              <button onClick={handleAddCategory} disabled={isAddingCategory}>
-                {isAddingCategory ? 'Добавляю...' : 'Добавить'}
-              </button>
-              <button onClick={closeAddCategoryPopup}>Отмена</button>
-            </div>
-          </div>
-        </div>
-      )}
-      {showAddBotPopup && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            <h2>Создать бота</h2>
-            <div className="bot-input-group">
-              <input
-                type="text"
-                placeholder="Название"
-                value={newBotData[0]}
-                onChange={(e) => handleBotInputChange(0, e.target.value)}
-              />
-              <textarea
-                placeholder="Описание"
-                value={newBotData[1]}
-                onChange={(e) => handleBotInputChange(1, e.target.value)}
-                style={{ minHeight: '60px', resize: 'vertical' }}
-              />
-              <input
-                type="text"
-                placeholder="Токен/Месенджер"
-                value={newBotData[2]}
-                onChange={(e) => handleBotInputChange(2, e.target.value)}
-              />
-              <textarea
-                placeholder="База"
-                value={newBotData[3]}
-                onChange={(e) => handleBotInputChange(3, e.target.value)}
-                style={{ minHeight: '60px', resize: 'vertical' }}
-              />
-            </div>
-            <div className="popup-buttons">
-              <button onClick={addBotToCategory} disabled={isAddingBot}>
-                {isAddingBot ? 'Добавляю...' : 'Добавить'}
-              </button>
-              <button onClick={closeAddBotPopup}>Отмена</button>
-            </div>
-          </div>
-        </div>
-      )}
-      {showEditCategoryPopup && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            <h2>Редактировать категорию</h2>
-            <input
-              type="text"
-              placeholder="Название категории"
-              value={editCategoryData.name}
-              onChange={(e) =>
-                setEditCategoryData((prev) => ({ ...prev, name: e.target.value }))
-              }
-            />
-            <div className="popup-buttons">
-              <button onClick={handleSaveEditedCategory} disabled={isSavingCategory}>
-                {isSavingCategory ? 'Сохраняю...' : 'Сохранить'}
-              </button>
-              <button onClick={() => setShowEditCategoryPopup(false)}>Отмена</button>
-            </div>
-          </div>
-        </div>
-      )}
-      {showEditBotPopup && editBotData.original && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            <h2>Редактировать Бота</h2>
-            <div className="bot-input-group">
-              <input
-                type="text"
-                placeholder="Название"
-                value={editBotData.updated.botName}
-                onChange={(e) => handleEditBotFieldChange('botName', e.target.value)}
-              />
-              <textarea
-                placeholder="Описание"
-                value={editBotData.updated.botDescription}
-                onChange={(e) => handleEditBotFieldChange('botDescription', e.target.value)}
-                style={{ minHeight: '60px', resize: 'vertical' }}
-              />
-              <input
-                type="text"
-                placeholder="Токен/Месенджер"
-                value={editBotData.updated.token}
-                onChange={(e) => handleEditBotFieldChange('token', e.target.value)}
-              />
-              <textarea
-                placeholder="База"
-                value={editBotData.updated.base}
-                onChange={(e) => handleEditBotFieldChange('base', e.target.value)}
-                style={{ minHeight: '60px', resize: 'vertical' }}
-              />
-            </div>
-            <div className="popup-buttons">
-              <button onClick={saveEditedBot} disabled={isSavingBot}>
-                {isSavingBot ? 'Сохраняю...' : 'Сохранить'}
-              </button>
-              <button
-                onClick={() => {
-                  setShowEditBotPopup(false);
-                  setEditBotData({
-                    categoryId: '',
-                    original: null,
-                    updated: { botName: '', botDescription: '', token: '', base: '' }
-                  });
-                }}
-              >
-                Отмена
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-      {confirmDelete && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            {confirmDelete.type === 'category' ? (
-              <>
-                <h2>Удалить категорию?</h2>
-                <p>Вы действительно хотите удалить категорию «{confirmDelete.data.name}»?</p>
-              </>
-            ) : (
-              <>
-                <h2>Удалить бота?</h2>
-                <p>Вы действительно хотите удалить бота «{confirmDelete.data.bot.botName}»?</p>
-              </>
-            )}
-            <div className="popup-buttons">
-              <button onClick={confirmDeleteAction}>Да</button>
-              <button onClick={cancelDeleteAction}>Нет</button>
-            </div>
-          </div>
-        </div>
-      )}
-      {showDetailPopup && (
-        <div className="popup-overlay">
-          <div className="popup-content">
-            <h2>{detailTitle}</h2>
-            <div className="bot-input-group">
-              <textarea
-                value={detailContent}
-                readOnly
-                style={{ minHeight: '150px', resize: 'vertical' }}
-              />
-            </div>
-            <div className="popup-buttons">
-              <button onClick={closeDetailPopup}>Закрыть</button>
-            </div>
-          </div>
-        </div>
-      )}
+    <div className="bot-creation-header">
+      <h1>{t('consciousnessTitle')}</h1>
+      <p>{t('consciousnessDescription')}</p>
     </div>
+    <div className="bot-creation-content">
+      <div className="bot-category-selection">
+        <h1>{t('botCategoryTitle')}</h1>
+        <div className="category-button-group">
+          {botCategories.length === 0 && (
+            <p style={{ textAlign: 'center', color: '#9e9e9e' }}>{t('noCategories')}</p>
+          )}
+          {botCategories.map((category) => (
+            <div
+              key={category.id}
+              style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}
+            >
+              <button
+                className={activeBotCategory === category.id ? 'active' : ''}
+                onClick={() => setActiveBotCategory(category.id)}
+                style={{ flex: 1 }}
+              >
+                {category.name}
+              </button>
+              <span
+                style={{
+                  cursor: 'pointer',
+                  marginLeft: '5px',
+                  color: 'gray',
+                  fontSize: '1.3em'
+                }}
+                onClick={() => handleDeleteCategoryClick(category)}
+                title={t('deletingConfirmationCategory')}
+              >
+                -
+              </span>
+              <span
+                style={{
+                  cursor: 'pointer',
+                  marginLeft: '10px',
+                  color: 'gray',
+                  fontSize: '1.3em'
+                }}
+                onClick={() => handleEditCategoryClick(category)}
+                title={t('editCategoryTitle')}
+              >
+                ✎
+              </span>
+            </div>
+          ))}
+          <button className="category-add-btn" onClick={openAddCategoryPopup}>
+            +
+          </button>
+        </div>
+      </div>
+      <div className="bot-table">
+        <div className="search-bar bot-search">
+          <img src="/icons/search.png" className="search-icon" alt="search" />
+          <input
+            type="text"
+            className="search-input"
+            placeholder={t('searchPlaceholder')}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+        {searchTerm ? (
+          <div className="search-results-box">
+            {filteredBots.length > 0 ? (
+              filteredBots.map((bot, index) => (
+                <p key={index} style={{ margin: '5px 0', color: '#333' }}>
+                  {bot.catName} → {bot.botName} ({bot.token})
+                </p>
+              ))
+            ) : (
+              <p style={{ color: '#555' }}>{t('noResultsFound')}</p>
+            )}
+          </div>
+        ) : (
+          botCategories.map((category) =>
+            activeBotCategory === category.id ? (
+              <div key={category.id} className="category-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>{t('consciousnessTitle')}</th>
+                      <th>{t('botDescriptionPlaceholder')}</th>
+                      <th>{t('tokenPlaceholder')}</th>
+                      <th>{t('basePlaceholder')}</th>
+                      <th>{t('actions')}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {category.bots.map((bot, index) => {
+                      const shortDesc =
+                        bot.botDescription && bot.botDescription.length > 20
+                          ? bot.botDescription.slice(0, 20) + '...'
+                          : bot.botDescription || '—';
+                      const shortBase =
+                        bot.base && bot.base.length > 20
+                          ? bot.base.slice(0, 20) + '...'
+                          : bot.base || '—';
+                      return (
+                        <tr key={index}>
+                          <td>{bot.botName || '—'}</td>
+                          <td>
+                            {shortDesc}{' '}
+                            {bot.botDescription && bot.botDescription.length > 20 && (
+                              <span
+                                className="show-details-icon"
+                                onClick={() =>
+                                  openDetailPopup(t('fullDescription'), bot.botDescription)
+                                }
+                              >
+                                📝
+                              </span>
+                            )}
+                          </td>
+                          <td>{bot.token || '—'}</td>
+                          <td>
+                            {shortBase}{' '}
+                            {bot.base && bot.base.length > 20 && (
+                              <span
+                                className="show-details-icon"
+                                onClick={() => openDetailPopup(t('fullBase'), bot.base)}
+                              >
+                                📝
+                              </span>
+                            )}
+                          </td>
+                          <td>
+                            <span
+                              className="delete-bot-icon"
+                              onClick={() => handleDeleteBotClick(category.id, bot)}
+                              title={t('deletingConfirmationBot')}
+                            >
+                              -
+                            </span>
+                            <span
+                              className="edit-bot-icon"
+                              onClick={() => handleEditBotClick(category.id, bot)}
+                              title={t('editBotTitle')}
+                            >
+                              ✎
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                {category.bots.length === 0 && (
+                  <p style={{ textAlign: 'center', color: '#9e9e9e' }}>{t('noBots')}</p>
+                )}
+              </div>
+            ) : null
+          )
+        )}
+        {activeBotCategory && !searchTerm && (
+          <button className="create-bot-btn" onClick={openAddBotPopup}>
+            {t('createBotButton')}
+          </button>
+        )}
+      </div>
+    </div>
+    {showAddCategoryPopup && (
+      <div className="popup-overlay">
+        <div className="popup-content">
+          <h2>{t('addCategoryPopupTitle')}</h2>
+          <input
+            type="text"
+            placeholder={t('addCategoryPlaceholder')}
+            value={newCategoryName}
+            onChange={(e) => setNewCategoryName(e.target.value)}
+          />
+          <div className="popup-buttons">
+            <button onClick={handleAddCategory} disabled={isAddingCategory}>
+              {isAddingCategory ? t('addingText') : t('addButtonText')}
+            </button>
+            <button onClick={closeAddCategoryPopup}>{t('cancelButtonText')}</button>
+          </div>
+        </div>
+      </div>
+    )}
+    {showAddBotPopup && (
+      <div className="popup-overlay">
+        <div className="popup-content">
+          <h2>{t('addBotPopupTitle')}</h2>
+          <div className="bot-input-group">
+            <input
+              type="text"
+              placeholder={t('botNamePlaceholder')}
+              value={newBotData[0]}
+              onChange={(e) => handleBotInputChange(0, e.target.value)}
+            />
+            <textarea
+              placeholder={t('botDescriptionPlaceholder')}
+              value={newBotData[1]}
+              onChange={(e) => handleBotInputChange(1, e.target.value)}
+              style={{ minHeight: '60px', resize: 'vertical' }}
+            />
+            <input
+              type="text"
+              placeholder={t('tokenPlaceholder')}
+              value={newBotData[2]}
+              onChange={(e) => handleBotInputChange(2, e.target.value)}
+            />
+            <textarea
+              placeholder={t('basePlaceholder')}
+              value={newBotData[3]}
+              onChange={(e) => handleBotInputChange(3, e.target.value)}
+              style={{ minHeight: '60px', resize: 'vertical' }}
+            />
+          </div>
+          <div className="popup-buttons">
+            <button onClick={addBotToCategory} disabled={isAddingBot}>
+              {isAddingBot ? t('addingText') : t('addButtonText')}
+            </button>
+            <button onClick={closeAddBotPopup}>{t('cancelButtonText')}</button>
+          </div>
+        </div>
+      </div>
+    )}
+    {showEditCategoryPopup && (
+      <div className="popup-overlay">
+        <div className="popup-content">
+          <h2>{t('editCategoryTitle')}</h2>
+          <input
+            type="text"
+            placeholder={t('addCategoryPlaceholder')}
+            value={editCategoryData.name}
+            onChange={(e) =>
+              setEditCategoryData((prev) => ({ ...prev, name: e.target.value }))
+            }
+          />
+          <div className="popup-buttons">
+            <button onClick={handleSaveEditedCategory} disabled={isSavingCategory}>
+              {isSavingCategory ? t('addingText') : t('saveButtonText')}
+            </button>
+            <button onClick={() => setShowEditCategoryPopup(false)}>{t('cancelButtonText')}</button>
+          </div>
+        </div>
+      </div>
+    )}
+    {showEditBotPopup && editBotData.original && (
+      <div className="popup-overlay">
+        <div className="popup-content">
+          <h2>{t('editBotTitle')}</h2>
+          <div className="bot-input-group">
+            <input
+              type="text"
+              placeholder={t('botNamePlaceholder')}
+              value={editBotData.updated.botName}
+              onChange={(e) => handleEditBotFieldChange('botName', e.target.value)}
+            />
+            <textarea
+              placeholder={t('botDescriptionPlaceholder')}
+              value={editBotData.updated.botDescription}
+              onChange={(e) => handleEditBotFieldChange('botDescription', e.target.value)}
+              style={{ minHeight: '60px', resize: 'vertical' }}
+            />
+            <input
+              type="text"
+              placeholder={t('tokenPlaceholder')}
+              value={editBotData.updated.token}
+              onChange={(e) => handleEditBotFieldChange('token', e.target.value)}
+            />
+            <textarea
+              placeholder={t('basePlaceholder')}
+              value={editBotData.updated.base}
+              onChange={(e) => handleEditBotFieldChange('base', e.target.value)}
+              style={{ minHeight: '60px', resize: 'vertical' }}
+            />
+          </div>
+          <div className="popup-buttons">
+            <button onClick={saveEditedBot} disabled={isSavingBot}>
+              {isSavingBot ? t('addingText') : t('saveButtonText')}
+            </button>
+            <button
+              onClick={() => {
+                setShowEditBotPopup(false);
+                setEditBotData({
+                  categoryId: '',
+                  original: null,
+                  updated: { botName: '', botDescription: '', token: '', base: '' }
+                });
+              }}
+            >
+              {t('cancelButtonText')}
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+    {confirmDelete && (
+      <div className="popup-overlay">
+        <div className="popup-content">
+          {confirmDelete.type === 'category' ? (
+            <>
+              <h2>{t('deletingConfirmationCategory')}</h2>
+              <p>{t('deleteConfirmationTextCategory').replace('{{categoryName}}', confirmDelete.data.name)}</p>
+            </>
+          ) : (
+            <>
+              <h2>{t('deletingConfirmationBot')}</h2>
+              <p>{t('deleteConfirmationTextBot').replace('{{botName}}', confirmDelete.data.bot.botName)}</p>
+            </>
+          )}
+          <div className="popup-buttons">
+            <button onClick={confirmDeleteAction}>{t('yesButtonText')}</button>
+            <button onClick={cancelDeleteAction}>{t('noButtonText')}</button>
+          </div>
+        </div>
+      </div>
+    )}
+    {showDetailPopup && (
+      <div className="popup-overlay">
+        <div className="popup-content">
+          <h2>{detailTitle}</h2>
+          <div className="bot-input-group">
+            <textarea
+              value={detailContent}
+              readOnly
+              style={{ minHeight: '150px', resize: 'vertical' }}
+            />
+          </div>
+          <div className="popup-buttons">
+            <button onClick={closeDetailPopup}>{t('closeButtonText')}</button>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+
   );
 }

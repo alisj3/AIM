@@ -44,11 +44,6 @@
     padding-left: 5px;
 }
 
-.preferences-core h3{
-    padding-right: 30px;
-    padding-bottom: 20px;
-}
-
 .core-item{
     display: flex;
     align-items: center;
@@ -157,7 +152,7 @@
 }
 
 .security-item p, .security-last-enter p{
-    font-weight: 700;
+    font-weight: 500;
 }
 
 .change-password-btn{
@@ -182,7 +177,8 @@
 
 .preferences-instruction{
     display: flex;
-    align-items: start;
+    align-items: center;
+    position: relative;
 }
 
 .preferences-instruction img{
@@ -212,17 +208,25 @@
     padding-bottom: 10px;
 }
 
-.card-rest input{
+.card-rest input, .card-rest select{
     width: 100%;
     padding: 17px;
     border-radius: 30px;
     border: 1px solid #CFD8DC;
+    color: #1E293B;
 }
 
 .card-save{
     display: flex;
     justify-content: space-between;
     padding-top: 20px;
+}
+
+.card-infosave:hover{
+    cursor: pointer;
+    color: #000;
+    background-color: #fff;
+    transition: all 0.4s;
 }
 
 .card-button{
@@ -237,6 +241,13 @@
     border: 2px solid #CBD5E1;
     color: #475569;
     font-weight: 600;
+    transition: all 0.4s;
+}
+
+.card-cancel:hover{
+    cursor: pointer;
+    background-color: #475569;
+    color: #fff;
 }
 
 .card-cancel span{
@@ -252,4 +263,72 @@
 
 .card-infosave span{
     padding-right: 5px;
+}
+
+.password-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+}
+  
+.popup-content h3 {
+    margin-bottom: 10px;
+}
+  
+.popup-content input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+  
+.popup-actions button {
+    margin: 0 5px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+  
+.infoModalStyles{
+    background-color: #ebebeb;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.infoModalStyles::before {
+    content: "";
+    position: absolute;
+    left: -10px; 
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent #ebebeb transparent transparent; 
+  }
+
+.preferences-instruction h3{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.last-enter-info{
+    padding-top: 30px;
 }

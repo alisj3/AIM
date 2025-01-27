@@ -14,7 +14,7 @@ export function MainLayout({ children }) {
             await signOut(auth);
             localStorage.removeItem('userDetails');
             localStorage.removeItem('categories')
-            window.location.href = "/login"; // Redirect to login page after logout
+            window.location.href = "/login";
         } catch (error) {
             console.error("Error logging out: ", error);
         }
