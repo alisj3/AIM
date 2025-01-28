@@ -1,7 +1,4 @@
 import { MainLayout } from "../Layouts/MainLayout";
-import { useEffect, useState, useContext } from "react";
-import { auth, db } from "../firebase/firebase";
-import { doc, getDoc } from "firebase/firestore";
 import { Plan } from "../components/Plan/Plan";
 import './PagesStyles/SubscriptionPage.css'
 import { useTranslation } from 'react-i18next'

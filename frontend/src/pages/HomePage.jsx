@@ -6,7 +6,7 @@ import { HomeLayout } from "../Layouts/HomeLayout";
 import { useTranslation } from 'react-i18next'
 
 const stylesFromProps = {
-  width: '100%',
+  width: '100%'
 };
 
 const infoTextStyles = {
@@ -31,8 +31,9 @@ export function HomePage() {
         image="AI" 
         imageText={t("EcosystemDescription")}
         textAlign="center" 
+        infoId = "ecosystem"
         anyStyle={{
-          animation: "pulseAndRotate 3s infinite ease-in-out"
+          animation: "pulseAndRotate 3s infinite ease-in-out",
         }} 
       />
 
@@ -42,6 +43,7 @@ export function HomePage() {
         text={t("NeuroStorageText")} 
         image="Example" 
         imageText=""  
+        infoId="neurostorage"
         textAlign="left" 
       />
 
@@ -51,7 +53,11 @@ export function HomePage() {
         text={t("ConsciousText")}
         image="Assistant" 
         imageText={t("ConsciousImageText")} 
+        infoId="conscious"
         textAlign="left" 
+        anyStyle = {{
+          width: "80%"
+        }}
       />
 
       <Info 
@@ -59,6 +65,7 @@ export function HomePage() {
         subtitle={t("JarvisSubtitle")} 
         text={t("JarvisText")} 
         image="Neiro" 
+        infoId="jarvis"
         imageText=""  
         textAlign="left" 
       />
@@ -70,6 +77,7 @@ export function HomePage() {
         text={t("JarvisSolutionsText")} 
         image="Jarvis" 
         imageText=""  
+        infoId="jarvissolution"
         textAlign="left" 
         backGroundColor="#000" 
         textColor="#ffdb15" 

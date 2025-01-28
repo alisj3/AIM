@@ -27,26 +27,26 @@ export function Intro(){
                 <h3>{t("TimelineTitle")}</h3>
                 <div className="timeline-container">
                 <div className="timeline">
-                    <Link to="/profile" className="timeline-item">
+                    <a href="#ecosystem" className="timeline-item">
                         <div className="dot"></div>
                         <p>{t("TimelineEcosystem")}</p>
-                    </Link>
-                    <Link className="timeline-item">
+                    </a>
+                    <a href='#neurostorage' className="timeline-item">
                         <div className="dot"></div>
                         <p>{t("TimelineNeurostorage")}</p>
-                    </Link>
-                    <Link className="timeline-item">
+                    </a>
+                    <a href='#conscious' className="timeline-item">
                         <div className="dot"></div>
                         <p>{t("TimelineConscious")}</p>
-                    </Link>
-                    <Link className="timeline-item">
+                    </a>
+                    <a href='#jarvis' className="timeline-item">
                         <div className="dot"></div>
                         <p>{t("TimelineStation")}</p>
-                    </Link>
-                    <Link className="timeline-item">
+                    </a>
+                    <a href='#jarvissolution' className="timeline-item">
                         <div className="dot"></div>
                         <p>TODO-JARVIS</p>
-                    </Link>
+                    </a>
                 </div>
                 </div>
             </div>

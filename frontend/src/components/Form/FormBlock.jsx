@@ -7,7 +7,7 @@ export function FormBlock(){
 
     return (
         <>
-            <div className='intro-2'>
+            <div className='intro-2 intro-form'>
                 <div className="intro-2-inner">
                     <h4 className="form-h3">Оставьте заявку</h4>
                         <form className="form-form">

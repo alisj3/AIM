@@ -13,15 +13,25 @@ export function MainLayout({ children }) {
         try {
             await signOut(auth);
             localStorage.removeItem('userDetails');
-            localStorage.removeItem('categories')
+            localStorage.removeItem('categories');
             window.location.href = "/login";
         } catch (error) {
             console.error("Error logging out: ", error);
         }
     };
 
+    const handleCenterClick = () => {
+        if (isLeftSidebarVisible) {
+            setIsLeftSidebarVisible(false);
+        }
+        if (isRightSidebarVisible) {
+            setIsRightSidebarVisible(false);
+        }
+    };
 
     const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
+    const [isLeftSidebarVisible, setIsLeftSidebarVisible] = useState(false);
+    const [isRightSidebarVisible, setIsRightSidebarVisible] = useState(false);
     const currentPath = window.location.pathname;
 
     const fetchUserName = async () => {
@@ -53,7 +63,8 @@ export function MainLayout({ children }) {
     return (
         <>
             <div className="layout-main">
-                <div className="layout-left">
+                {/* Left Sidebar */}
+                <div className={`layout-left ${isLeftSidebarVisible ? 'visible' : 'hidden'}`}>
                     <Link to="/"><img className="layout-logo" src="/logo.png" alt="" /></Link>
                     <div className="nav">
                         <Link to="/profile" className={`link ${currentPath === '/profile' ? 'active' : ''}`}>
@@ -102,20 +113,33 @@ export function MainLayout({ children }) {
                     </div>
                 </div>
 
-                <div className="layout-center">
+                {/* Main Content Area */}
+                <div className="layout-center" onClick={handleCenterClick}>
                     <div className="layout-center-top">
+                        <button 
+                            className="sidebar-toggle left" 
+                            onClick={() => setIsLeftSidebarVisible(!isLeftSidebarVisible)}
+                        >
+                            &#9776;
+                        </button>
                         <div className="search-bar">
                             <img src="/icons/search.png" className="search-icon" />
                             <input type="text" className="search-input" placeholder="Поиск" />
                         </div>
+                        <button 
+                            className="sidebar-toggle right" 
+                            onClick={() => setIsRightSidebarVisible(!isRightSidebarVisible)}
+                        >
+                            <img src="/icons/account.png" alt="" />
+                        </button>
                     </div>
                     <div className="layout-content">
                         {children}    
                     </div>
-                    
                 </div>
 
-                <div className="layout-right">
+                {/* Right Sidebar */}
+                <div className={`layout-right ${isRightSidebarVisible ? 'visible' : 'hidden'}`}>
                     <div className="layout-icons">
                         <a href="" className="layout-icon"><img src="/icons/notification-bing.png" alt="" /></a>
                         <div className="layout-right-account">

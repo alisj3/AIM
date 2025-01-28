@@ -1,64 +1,96 @@
-.form-form{
+.form-form {
     display: flex;
     flex-direction: column;
     width: 100%;
+    gap: 15px;
 }
 
-.form-input{
-    padding: 10px;
-    width: 100%;
-    margin-bottom: 10px;
-    background-color: transparent;
-    color: #000;
-    border: none;
-    border-bottom: 2px solid #000;
-    margin-top: 10px;
+.form-h3 {
+    font-size: clamp(2.5em, 2.5vw, 1.8em);
+    padding-bottom: 30px;
+    color: #333;
 }
 
-.form-input:internal-autofill-selected {
-    background-color: transparent;
+.formblock-content h4 {
+    font-size: clamp(2.3em, 2.3vw, 1.5em);
+    color: #333;
 }
 
-.form-area{
-    padding: 10px;
-    margin-bottom: 10px;
+.form-input,
+.form-area {
+    padding: 12px;
+    width: 70%;
+    margin-bottom: 15px;
     background-color: transparent;
-    color: #000;
-    border: none;
-    border-bottom: 2px solid #000;
-    margin-top: 10px;
+    color: #333;
+    border: 2px solid #333;
+    border-left: 4px solid #ff5f00; /* Fashionable side border */
+    border-radius: 8px;
+    font-size: clamp(1.1em, 1vw, 1.1em);
+    transition: all 0.3s ease;
 }
 
-.form-button{
-    padding: 10px;
-    background-color: transparent;
-    border: 2px solid #000;
+.form-input:focus,
+.form-area:focus {
+    border-left: 4px solid #ffdb15;
+    border-color: #333;
+    outline: none;
+}
+
+.form-button {
+    width: 70%;
+    padding: 12px;
+    background-color: #333;
+    border: 2px solid #333;
     font-weight: 700;
+    font-size: 1.1em;
     transition: all 0.4s;
-}
-
-.form-button:hover{
+    border-radius: 8px;
     color: #ffdb15;
     cursor: pointer;
-    background-color: #000;
-
 }
 
-.form-area::placeholder{
-    color: #000;
+.form-button:hover {
+    color: #fff;
+    background-color: #ffdb15;
+    border-color: #252525;
 }
 
-.form-input::placeholder{
-    color: #000;
+.form-area::placeholder,
+.form-input::placeholder {
+    color: #555;
 }
 
-.formblock-content{
+.formblock-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 40%;
+    width: 50%;
+    margin-top: 40px;
 }
 
-.intro-2-inner{
-    width: 40%;
+.form-logo {
+    max-width: 100px;
+    margin-bottom: 20px;
+}
+
+.intro-2-inner {
+    width: 60%;
+    margin: auto;
+}
+
+@media (max-width: 1024px) {
+    .intro-2-inner {
+        width: 90%;
+    }
+
+    .intro-2 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .formblock-content {
+        width: 90%;
+    }
 }

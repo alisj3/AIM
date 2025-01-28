@@ -5,7 +5,7 @@
 }
 
 .intro-2{
-    
+    margin: 100px;
     animation: appear linear;
     animation-timeline: view();
     animation-range: entry 0% cover 40%;
@@ -20,7 +20,7 @@
 
 .intro{
     text-align: center;
-    padding-bottom: 100px;
+    padding: 100px;
 }
 
 .intro h3{
@@ -50,6 +50,7 @@
     cursor: pointer;
     display: block;
     transition: all 0.4s;
+    font-size: clamp(0.7em, 1vw, 1.5em);
 }
 
 .intro-button:first-child{
@@ -84,7 +85,7 @@
 .intro-2 h3{
     text-align: center;
     font-size: 2em;
-    width: 36%;
+    width: 40%;
 }
 
 .intro-2 hr{
@@ -99,13 +100,13 @@
 }
 
 .intro-3{
-    height: 100vh;
+    height: 100dvh;
     margin-bottom: 50px;
 }
 
 .intro-3 h3{
     text-align: left;
-    font-size: 3em;
+    font-size: clamp(1.5rem, 5vw, 3rem);
     padding-left: 100px;
     padding-bottom: 30vh;
 }
@@ -118,7 +119,7 @@
   .timeline {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     width: 100%;
     max-width: 1200px;
     position: relative;
@@ -174,3 +175,61 @@
     z-index: 10;
     transform: translateY(-50%);
   }
+
+  @media (max-width: 768px) {
+    .timeline::before{
+      top: 11%;
+    }
+
+    .intro {
+      text-align: center;
+      padding: 50px 20px;
+      padding-bottom: 250px;
+    }
+  
+    .intro h1 {
+      font-size: 2.5em;
+      margin-top: 20px;
+    }
+  
+    .intro h3 {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+  
+    .intro-buttons {
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+  
+    .intro-button {
+      width: 80%;
+      padding: 15px;
+      font-size: 1em;
+    }
+  
+    .intro-2 {
+      flex-direction: column;
+      padding: 20px;
+      height: auto;
+    }
+  
+    .intro-2 h3 {
+      font-size: 1.5em;
+      width: 100%;
+    }
+  
+    .intro-2 hr {
+      height: 5px;
+      width: 90%;
+      margin: 20px 0;
+    }
+  
+    .intro-2 img {
+      width: 80%;
+      margin-top: 20px;
+    }
+  }
+  

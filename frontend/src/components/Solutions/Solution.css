@@ -1,0 +1,127 @@
+/* Solutions.css */
+.intro-2 {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.intro-2 img {
+    width: 40%;
+}
+
+.intro-2 h4 {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    font-size: 2.2em;
+}
+
+
+.intro-2 .doc-text {
+    width: 50%;
+    text-align: left;
+    padding-left: 40px;
+}
+
+.intro-2 .doc-text h3 {
+    width: 100%;
+    text-align: left;
+    font-size: 2em;
+}
+
+.intro-2 .doc-text h4 {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    font-size: 1.5em;
+}
+
+.intro-2 .doc-text p {
+    font-size: 1em;
+    font-weight: 600;
+    width: 70%;
+}
+
+/* Mobile responsiveness for 768px */
+@media (max-width: 768px) {
+    .doc-img-text{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .intro-2 {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .intro-2 img {
+        width: 60%; /* Make image a bit larger */
+    }
+
+    .intro-2.solutions-intro{
+        align-items: center;
+        justify-content: center;
+    }
+
+    .intro-2 h4 {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        font-size: 2em; /* Slightly smaller font size */
+    }
+
+    .intro-2 .doc-text {
+        width: 80%; /* Make text area take more space */
+        text-align: center;
+        padding-left: 0;
+    }
+
+    .intro-2 .doc-text h3 {
+        font-size: 1.8em;
+        text-align: center;
+    }
+
+    .intro-2 .doc-text h4 {
+        font-size: 1.3em;
+    }
+
+    .intro-2 .doc-text p {
+        font-size: 1em;
+        width: 90%;
+        text-align: justify;
+    }
+}
+
+/* Mobile responsiveness for 425px */
+@media (max-width: 425px) {
+    .intro-2 {
+        padding: 15px;
+    }
+
+    .intro-2 img {
+        width: 70%; /* Image gets even larger */
+    }
+
+    .intro-2 h4 {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        font-size: 1.8em; /* Adjust font size for smaller screens */
+    }
+
+    .intro-2 .doc-text {
+        width: 90%;
+        text-align: center;
+    }
+
+    .intro-2 .doc-text h3 {
+        font-size: 1.6em;
+    }
+
+    .intro-2 .doc-text h4 {
+        font-size: 1.2em;
+    }
+
+    .intro-2 .doc-text p {
+        font-size: 0.9em;
+        width: 100%;
+    }
+}
