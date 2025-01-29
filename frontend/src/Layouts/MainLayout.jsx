@@ -5,15 +5,27 @@ import { auth, db } from '../firebase/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { signOut } from "firebase/auth";
 import { useTranslation } from "react-i18next";
+import { ToastContainer, toast } from 'react-toastify';
+import { useNotifications } from "../components/Notification/NotificationContext";
+import { useNavigate } from "react-router-dom";
 
 export function MainLayout({ children }) {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
+    const { showNotification } = useNotifications();
+    const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
+    const [isLeftSidebarVisible, setIsLeftSidebarVisible] = useState(false);
+    const [isRightSidebarVisible, setIsRightSidebarVisible] = useState(false);
+    const [showNotificationWindow, setShowNotificationWindow] = useState(false)
+    const [notifications, setNotifications] = useState([]);
+
+    const currentPath = window.location.pathname;
     
     const handleLogout = async () => {
         try {
             await signOut(auth);
             localStorage.removeItem('userDetails');
             localStorage.removeItem('categories');
+            localStorage.setItem('loginNotificationShown', 'false');
             window.location.href = "/login";
         } catch (error) {
             console.error("Error logging out: ", error);
@@ -28,11 +40,6 @@ export function MainLayout({ children }) {
             setIsRightSidebarVisible(false);
         }
     };
-
-    const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
-    const [isLeftSidebarVisible, setIsLeftSidebarVisible] = useState(false);
-    const [isRightSidebarVisible, setIsRightSidebarVisible] = useState(false);
-    const currentPath = window.location.pathname;
 
     const fetchUserName = async () => {
         if (!userName) { 
@@ -56,9 +63,25 @@ export function MainLayout({ children }) {
         }
     };
 
+    const showNotificationWondow = () => {
+        setShowNotificationWindow(prevState => !prevState)
+    }
+
+    const notify = (message, type) => {
+        toast(message, { type });
+        setNotifications(prev => [...prev, { message, type }]);
+    };
+
     useEffect(() => {
         fetchUserName();
+        if (localStorage.getItem('loginNotificationShown') !== 'true') {
+            notify("You are logged in!", "success");
+            localStorage.setItem('loginNotificationShown', 'true');
+        }
+
+        notify("hello", "success")
     }, []);
+    
 
     return (
         <>
@@ -141,12 +164,35 @@ export function MainLayout({ children }) {
                 {/* Right Sidebar */}
                 <div className={`layout-right ${isRightSidebarVisible ? 'visible' : 'hidden'}`}>
                     <div className="layout-icons">
-                        <a href="" className="layout-icon"><img src="/icons/notification-bing.png" alt="" /></a>
+                        <div className="notification-block">
+                            <img className='layout-notifications-icon' onClick={showNotificationWondow} src="/icons/notification-bing.png" alt="" />
+                            <p className='notification-counter'>{notifications.length}</p>
+                        </div>
                         <div className="layout-right-account">
-                            <img src="/icons/account.png" alt="" />
+                            <img src="/icons/account.png"alt="" />
                             <h3>{userName}</h3>
                         </div>
                     </div>
+                    
+                    <div className="layout-right-toast">
+                        <div className="layout-right-toast">
+                                
+                        {showNotificationWindow && notifications.length > 0 ? (
+                            notifications.map((notification, index) => (
+                                <div key={index} className="toast-notification">
+                                    {showNotification(notification.message, notification.type)}
+                                </div>
+                            ))
+                        ) : toast.dismiss()}
+
+                                 
+                            
+                        </div>
+                    </div>
+
+                    
+                    <ToastContainer toastClassName="toast" />
+                    
                 </div>
             </div>
         </>

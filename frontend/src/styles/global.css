@@ -17,3 +17,6 @@ a {
     text-decoration: none;
 }
 
+.Toastify__toast-container--top-right {
+    top: 100px !important;
+}

@@ -7,6 +7,10 @@ body {
     height: 100vh;
 }
 
+.layout-left{
+    border-right: 2px solid #E6E6E6;
+}
+
 .layout-line {
     width: 60%;
     margin-top: 30px;
@@ -15,49 +19,6 @@ body {
     height: 2px;
     background-color: #DFDFDF;
     margin-left: 2.5vw;
-}
-
-.layout-left {
-    position: fixed; /* Stick to the left edge of the viewport */
-    top: 0;
-    bottom: 0;
-    left: 0; /* Ensure it aligns to the left */
-    width: 20vw; /* Adjust width as needed */
-    transition: transform 0.3s ease; /* Smooth transition */
-    transform: translateX(-100%); /* Start off-screen to the left */
-    overflow-y: auto;
-    z-index: 999;
-    background-color: #fff;
-    border-right: 2px solid #E6E6E6;
-}
-
-.layout-left.visible {
-    transform: translateX(0); /* Bring it fully into view */
-}
-
-.layout-left.hidden {
-    transform: translateX(-100%); /* Move completely off-screen to the left */
-}
-
-.layout-right {
-    position: fixed; /* Stick to the right edge of the viewport */
-    top: 0;
-    bottom: 0;
-    right: 0; /* Ensure it aligns to the right */
-    width: 40vw; /* Adjust width as needed */
-    transition: transform 0.3s ease; /* Smooth transition */
-    transform: translateX(100%); /* Start off-screen to the right */
-    overflow-y: auto;
-    z-index: 999;
-    background-color: #fff;
-}
-
-.layout-right.visible {
-    transform: translateX(0); /* Bring it fully into view */
-}
-
-.layout-right.hidden {
-    transform: translateX(100%); /* Move completely off-screen to the right */
 }
 
 .layout-logo {
@@ -164,13 +125,143 @@ body {
     padding: 25px 40px;
     display: flex;
     align-items: center;
+    position: relative;
 }
 
 .sidebar-toggle {
     display: none;
 }
 
+.toast {
+    max-width: 90%;
+}
+
+.layout-notifications-icon{
+    transition: all 0.2s;
+}
+
+.layout-notifications-icon:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+    filter: brightness(50%);
+}
+
+.notification-block{
+    position: relative;
+}
+
+.notification-counter{
+    font-size: 0.5vw;
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: #fff;
+    background-color: #fff;
+    background-color: #D74632;
+    width: 12px;
+    line-height: 12px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.search-container {
+    position: relative;
+    width: 250px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.search-icon {
+    width: 20px;
+    margin-right: 8px;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+.search-bar{
+    position: relative;
+}
+
+.search-dropdown {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.search-item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.search-item:hover {
+    background: #f0f0f0;
+}
+
+
 @media(max-width: 1024px) {
+
+    .layout-left {
+        position: fixed; /* Stick to the left edge of the viewport */
+        top: 0;
+        bottom: 0;
+        left: 0; /* Ensure it aligns to the left */
+        width: 20vw; /* Adjust width as needed */
+        transition: transform 0.3s ease; /* Smooth transition */
+        transform: translateX(-100%); /* Start off-screen to the left */
+        overflow-y: auto;
+        z-index: 999;
+        background-color: #fff;
+        border-right: 2px solid #E6E6E6;
+    }
+    
+    .layout-left.visible {
+        transform: translateX(0); /* Bring it fully into view */
+    }
+    
+    .layout-left.hidden {
+        transform: translateX(-100%); /* Move completely off-screen to the left */
+    }
+    
+    .layout-right {
+        position: fixed; /* Stick to the right edge of the viewport */
+        top: 0;
+        bottom: 0;
+        right: 0; /* Ensure it aligns to the right */
+        width: 40vw; /* Adjust width as needed */
+        transition: transform 0.3s ease; /* Smooth transition */
+        transform: translateX(100%); /* Start off-screen to the right */
+        overflow-y: auto;
+        z-index: 999;
+        background-color: #fff;
+    }
+    
+    .layout-right.visible {
+        transform: translateX(0); /* Bring it fully into view */
+    }
+    
+    .layout-right.hidden {
+        transform: translateX(100%); /* Move completely off-screen to the right */
+    }
+
     .layout-center-top {
         display: flex;
         flex-direction: row;
