@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom"
 import "./Login.css";
 import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { doc, setDoc, getDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, updateDoc  } from "firebase/firestore";
 import { auth, db } from "../../firebase/firebase";
 import { useTranslation } from 'react-i18next'
 
@@ -68,7 +68,14 @@ export function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            await signInWithEmailAndPassword(auth, email, password);
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            const userRef = doc(db, "Users", user.uid);
+            await updateDoc(userRef, {
+                lastLogin: new Date()
+            });
+
             window.location.href = "/profile";
         } catch (error) {
             console.error("Error during login:", error);
@@ -86,7 +93,13 @@ export function Login() {
                     if (!docSnap.exists()) {
                         setModalOpen(true);
                     } else {
-                        window.location.href = "/profile";
+                        updateDoc(userRef, {
+                            lastLogin: new Date()
+                        }).then(() => {
+                            window.location.href = "/profile";
+                        }).catch((error) => {
+                            console.error("Error updating lastLogin field:", error);
+                        });
                     }
                 });
             })

@@ -14,7 +14,7 @@ export function MainLayout({ children }) {
             await signOut(auth);
             localStorage.removeItem('userDetails');
             localStorage.removeItem('categories')
-            window.location.href = "/login"; // Redirect to login page after logout
+            window.location.href = "/login";
         } catch (error) {
             console.error("Error logging out: ", error);
         }
@@ -76,10 +76,11 @@ export function MainLayout({ children }) {
                             <img src="/icons/money.png" alt="" />
                             {t("MainSubscrition")}
                         </Link>
-                        <a href="" className="link">
+                        <Link to="/integrations" className={`link ${currentPath === '/integrations' ? 'active' : ''}`}>
                             <img src="/icons/list.png" alt="" />
-                            {t("MainIntegration")}
-                        </a>
+                             {t("MainIntegration")}
+                        </Link>
+
                     </div>
                     <hr className="layout-line" />
                     <div className="nav">
@@ -99,6 +100,7 @@ export function MainLayout({ children }) {
                             <img src="/icons/exit.png" alt="" />
                             {t("MainExit")}
                         </a>
+                    
                     </div>
                 </div>
 

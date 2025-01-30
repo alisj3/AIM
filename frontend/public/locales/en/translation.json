@@ -152,5 +152,52 @@
     "cardOwnerLabel": "Card Owner",
     "countryLabel": "Country",
     "cancelButtonLabel": "Cancel",
-    "saveButtonLabel": "Save"
+    "saveButtonLabel": "Save",
+    
+    "changePasswordPopupTitle": "Change Password",
+    "enterNewPasswordPlaceholder": "Enter new password",
+    "submitButtonLabel": "Change",
+    "cardNumberPlaceholder": "Enter card number",
+    "cardNamePlaceholder": "Enter name on the card",
+
+    "markerPopupText": "You clicked on me!",
+    "contactUsTitle": "Contact Us",
+    "contactUsDescription": "We value every one of our clients and are always happy to get in touch. If you want to contact us, write to us!",
+    "socialMediaTitle": "We are on social media",
+    "findUsOnMapTitle": "Find Us on the Map",
+    "locationDescription": "BC Ambassador, 6th floor AIM-Company, Almaty",
+
+
+    "consciousnessTitle": "Consciousness",
+    "consciousnessDescription": "Create your artificial consciousness",
+    "botCategoryTitle": "Bot Categories",
+    "noCategories": "No categories",
+    "searchPlaceholder": "Search",
+    "noResultsFound": "No results found",
+    "noBots": "No bots",
+    "createBotButton": "Create Bot",
+    "addCategoryPopupTitle": "Create category",
+    "addCategoryPlaceholder": "Category name",
+    "addBotPopupTitle": "Create bot",
+    "botNamePlaceholder": "Name",
+    "botDescriptionPlaceholder": "Description",
+    "tokenPlaceholder": "Token/Messenger",
+    "basePlaceholder": "Base",
+    "saveButtonText": "Save",
+    "cancelButtonText": "Cancel",
+    "addButtonText": "Add",
+    "addingText": "Adding...",
+    "deletingConfirmationCategory": "Delete category?",
+    "deletingConfirmationBot": "Delete bot?",
+    "deleteConfirmationTextCategory": "Are you sure you want to delete the category '{{categoryName}}'?",
+    "deleteConfirmationTextBot": "Are you sure you want to delete the bot '{{botName}}'?",
+    "yesButtonText": "Yes",
+    "noButtonText": "No",
+    "closeButtonText": "Close",
+    "fullDescription": "Full description",
+    "fullBase": "Full base",
+    "editCategoryTitle": "Edit category",
+    "editBotTitle": "Edit Bot"
+
+    
 }
