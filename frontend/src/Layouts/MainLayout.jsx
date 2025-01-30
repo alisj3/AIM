@@ -185,14 +185,11 @@ export function MainLayout({ children }) {
                                 </div>
                             ))
                         ) : toast.dismiss()}
-
-                                 
-                            
+                        
+                            <ToastContainer toastClassName="toast" />    
                         </div>
                     </div>
 
-                    
-                    <ToastContainer toastClassName="toast" />
                     
                 </div>
             </div>

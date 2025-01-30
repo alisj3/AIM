@@ -132,10 +132,6 @@ body {
     display: none;
 }
 
-.toast {
-    max-width: 90%;
-}
-
 .layout-notifications-icon{
     transition: all 0.2s;
 }
