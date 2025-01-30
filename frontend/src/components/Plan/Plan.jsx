@@ -9,11 +9,12 @@ import { useTranslation } from 'react-i18next';
 export function Plan({ SubscriptionTitle, SubscriptionPrice, SubscriptionPercs = [], anyStyle }) {
     const { t } = useTranslation();
     const [cardPopup, setCardPopup] = useState(false);
-    const [cardExists, setCardExists] = useState(null);
+    const [cardExists, setCardExists] = useState(false);
     const [cardNumber, setCardNumber] = useState('');
     const navigate = useNavigate();
     const [userId, setUserId] = useState(null);
-    const [isSubscriptionActive, setIsSubscriptionActive] = useState(false)
+    const [planIsUsed, setPlanIsUsed] = useState(false)
+    const [subscriptionType, setSubscriptionType] = useState("")
 
     useEffect(() => {
         const user = auth.currentUser;
@@ -56,7 +57,7 @@ export function Plan({ SubscriptionTitle, SubscriptionPrice, SubscriptionPercs =
         const currentDate = new Date();
         const oneMonthLater = new Date(currentDate);
         oneMonthLater.setMonth(currentDate.getMonth() + 1);
-        const subType = SubscriptionTitle;
+
       
         try {
           // Check if the user already has an active subscription
@@ -65,7 +66,7 @@ export function Plan({ SubscriptionTitle, SubscriptionPrice, SubscriptionPercs =
           const activeSubscription = subscriptionSnap.docs.find(doc => doc.data().isActive);
       
           if (activeSubscription) {
-            alert(t("activeSubscriptionError")); // Show an error message if there is already an active subscription
+            setPlanIsUsed(true) // Show an error message if there is already an active subscription
             return;
           }
       
@@ -73,20 +74,27 @@ export function Plan({ SubscriptionTitle, SubscriptionPrice, SubscriptionPercs =
           await addDoc(userSubscriptionCollection, {
             createdAt: currentDate,
             expirationDate: oneMonthLater,
-            type: subType,
-            isActive: isSubscriptionActive,  // Set the new subscription as active
+            type: subscriptionType,
+            isActive: true,  // Set the new subscription as active
           });
-          
-          alert(t("cardAddedSuccess"));
         } catch (e) {
           console.error("Error adding card info: ", e);
         }
-      };
-      
-      
+    };
 
     const handlePlanChoose = () => {
         setCardPopup(true);
+        if (["Про", "Pro", "Про"].includes(SubscriptionTitle)) {
+            setSubscriptionType("Pro");
+        } 
+        
+        if (["Basic", "Базовый", "Негізгі"].includes(SubscriptionTitle)) {
+            setSubscriptionType("Base");
+        } 
+
+        if (["Individual", "Индивидуальный", "Жеке"].includes(SubscriptionTitle)) {
+            setSubscriptionType("Individual");
+        } 
     };
 
     return (
@@ -117,15 +125,16 @@ export function Plan({ SubscriptionTitle, SubscriptionPrice, SubscriptionPercs =
 
             {cardPopup && (
                 <div className="cardinfo">
-                    {cardExists === null ? (
+                    {cardExists === false ? (
                         <p>Loading...</p>
                     ) : cardExists ? (
                         <>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" onClick={() => setCardPopup(false)}>
-                            <path d="M18 6L6 18M6 6l12 12" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-
-
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" onClick={() => setCardPopup(false)}>
+                                <path d="M18 6L6 18M6 6l12 12" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            {
+                                planIsUsed ? (<p className='plan-in-used'>You already have an active plan</p>) : null
+                            }
                             <h3>{t("YourCard")}</h3>
                             <input
                                 type="text"
@@ -133,7 +142,7 @@ export function Plan({ SubscriptionTitle, SubscriptionPrice, SubscriptionPercs =
                                 readOnly
                                 className="card-input"
                             />
-                            <button onClick={() => {setIsSubscriptionActive(true), addPlanType()}} className="continue-button">Continue</button>
+                            <button onClick={() => {addPlanType()}} className="continue-button">Continue</button>
                         </>
                     ) : (
                         useEffect(() => navigate("/preferences"), [])

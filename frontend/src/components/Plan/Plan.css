@@ -139,6 +139,17 @@
     cursor: pointer;
 }
 
+.plan-in-used{
+    color: #fff;
+    background-color: tomato;
+    text-align: center;
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 @media (max-width: 1024px) {
     .plan{
         max-width: 80%;
