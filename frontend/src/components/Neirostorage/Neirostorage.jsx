@@ -1,3 +1,5 @@
+// src/components/Neirostorage.jsx
+
 import './Neirostorage.css'
 import React, { useState, useEffect, useRef } from 'react'
 import { db } from '../../firebase/firebase'
@@ -35,7 +37,6 @@ export function Neirostorage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [highlightCategory, setHighlightCategory] = useState('')
   const [highlightRowIndex, setHighlightRowIndex] = useState(null)
-  const currencies = ['USD', 'KZT', 'RUB', 'UAH', 'CNY', 'BYN', 'EUR', 'GBP']
   const tableRefs = useRef({})
 
   useEffect(() => {
@@ -146,7 +147,7 @@ export function Neirostorage() {
       setIsAddingProduct(false)
       return
     }
-    const [name, description, price, currency, unit] = newRow
+    const [name, description, price, soldUnits, unit] = newRow
     if (!name.trim()) {
       setIsAddingProduct(false)
       return
@@ -158,7 +159,7 @@ export function Neirostorage() {
           name: name.trim(),
           description: description.trim(),
           price: price.trim(),
-          currency: currency.trim(),
+          soldUnits: soldUnits.trim(),
           unit: unit.trim()
         })
       })
@@ -173,7 +174,7 @@ export function Neirostorage() {
                     name: name.trim(),
                     description: description.trim(),
                     price: price.trim(),
-                    currency: currency.trim(),
+                    soldUnits: soldUnits.trim(),
                     unit: unit.trim()
                   }
                 ]
@@ -305,7 +306,7 @@ export function Neirostorage() {
                       p.name === product.name &&
                       p.description === product.description &&
                       p.price === product.price &&
-                      p.currency === product.currency &&
+                      p.soldUnits === product.soldUnits &&
                       p.unit === product.unit
                     )
                 )
@@ -369,7 +370,7 @@ export function Neirostorage() {
                     p.name === original.name &&
                     p.description === original.description &&
                     p.price === original.price &&
-                    p.currency === original.currency &&
+                    p.soldUnits === original.soldUnits &&
                     p.unit === original.unit
                   )
               )
@@ -499,7 +500,7 @@ export function Neirostorage() {
                           <th>Название</th>
                           <th>Описание</th>
                           <th>Цена</th>
-                          <th>Валюта</th>
+                          <th>Продано</th>
                           <th>Единица</th>
                           <th></th>
                         </tr>
@@ -518,7 +519,7 @@ export function Neirostorage() {
                                 <td>{product.name}</td>
                                 <td>{product.description}</td>
                                 <td>{product.price}</td>
-                                <td>{product.currency}</td>
+                                <td>{product.soldUnits}</td>
                                 <td>{product.unit || '-'}</td>
                                 <td>
                                   <span
@@ -558,9 +559,9 @@ export function Neirostorage() {
                       </tbody>
                     </table>
                     <div className="buttons-bottom-right">
-                    <button className="create-product" onClick={handleOpenAddProductPopup}>
+                      <button className="create-product" onClick={handleOpenAddProductPopup}>
                         {t('ProductCreate')}
-                    </button> 
+                      </button> 
                       <button className="create-product" onClick={handleOpenUploadPopup}>
                         Загрузить
                       </button>
@@ -614,7 +615,9 @@ export function Neirostorage() {
                 value={newRow[2]}
                 onChange={(e) => handleInputChange(2, e.target.value)}
               />
-              <select
+              <input
+                type="text"
+                placeholder="Продано"
                 value={newRow[3]}
                 onChange={(e) => handleInputChange(3, e.target.value)}
                 style={{
@@ -624,16 +627,7 @@ export function Neirostorage() {
                   backgroundColor: '#444',
                   color: '#fff'
                 }}
-              >
-                <option value="" disabled>
-                  Выберите валюту
-                </option>
-                {currencies.map((cur) => (
-                  <option key={cur} value={cur}>
-                    {cur}
-                  </option>
-                ))}
-              </select>
+              />
               <input
                 type="text"
                 placeholder="Единица товара"
@@ -731,9 +725,11 @@ export function Neirostorage() {
                 value={editProductData.updated.price}
                 onChange={(e) => handleEditProductFieldChange('price', e.target.value)}
               />
-              <select
-                value={editProductData.updated.currency}
-                onChange={(e) => handleEditProductFieldChange('currency', e.target.value)}
+              <input
+                type="text"
+                placeholder="Продано"
+                value={editProductData.updated.soldUnits}
+                onChange={(e) => handleEditProductFieldChange('soldUnits', e.target.value)}
                 style={{
                   padding: '10px',
                   border: '1px solid #555',
@@ -741,16 +737,7 @@ export function Neirostorage() {
                   backgroundColor: '#444',
                   color: '#fff'
                 }}
-              >
-                <option value="" disabled>
-                  Выберите валюту
-                </option>
-                {currencies.map((cur) => (
-                  <option key={cur} value={cur}>
-                    {cur}
-                  </option>
-                ))}
-              </select>
+              />
               <input
                 type="text"
                 placeholder="Единица товара"

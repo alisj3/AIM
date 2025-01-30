@@ -51,17 +51,17 @@ export function Support() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = {
-      user_email: emailFromDB,
-      to_email: "aimcompany2025@gmail.com",
+      form: emailFromDB,
+      to_name: "aimcompany2025@gmail.com",
       message,
-      user_name: name,
+      from_name: name,
     };
-    try {
+    try { 
       const response = await emailjs.send(
         "service_hgnc20n",
         "template_c714yia",
         formData,
-        "your_user_id"
+        "F3IuCP908l8ln97wV"
       );
       console.log("Email sent successfully:", response);
     } catch (error) {

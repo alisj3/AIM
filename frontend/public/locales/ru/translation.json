@@ -59,7 +59,7 @@
     "MainSubscrition": "Подписки",
     "MainIntegration": "Интергации",
     "MainHelp": "Поддержка",
-    "MainContacts": "Контакты",
+    "MainCont   s": "Контакты",
     "MainPreferences": "Настройки",
     "MainExit": "Выйти",
 
@@ -188,6 +188,9 @@
     "botDescriptionPlaceholder": "Описание",
     "tokenPlaceholder": "Токен/Месенджер",
     "basePlaceholder": "База",
+    "parasiticWordsTitle": "Паразитные слова",
+    "characterTitle": "Характер",
+    "actions": "Действия", 
     "saveButtonText": "Сохранить",
     "cancelButtonText": "Отмена",
     "addButtonText": "Добавить",

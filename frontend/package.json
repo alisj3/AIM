@@ -12,7 +12,6 @@
   "dependencies": {
     "emailjs-com": "^3.2.0",
     "firebase": "^11.1.0",
-    "fuse.js": "^7.0.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-toastify": "^11.0.3",

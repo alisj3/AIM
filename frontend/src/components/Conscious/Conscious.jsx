@@ -18,6 +18,7 @@ export function Conscious() {
   
     const { t } = useTranslation();
 
+  // Updated state to include parasiticWords and character
   const [botCategories, setBotCategories] = useState([]);
   const [activeBotCategory, setActiveBotCategory] = useState('');
   const [showAddCategoryPopup, setShowAddCategoryPopup] = useState(false);
@@ -25,7 +26,8 @@ export function Conscious() {
   const [isAddingCategory, setIsAddingCategory] = useState(false);
 
   const [showAddBotPopup, setShowAddBotPopup] = useState(false);
-  const [newBotData, setNewBotData] = useState(['', '', '', '']);
+  // Expanded newBotData to include parasiticWords and character
+  const [newBotData, setNewBotData] = useState(['', '', '', '', '', '']); // [botName, botDescription, token, base, parasiticWords, character]
   const [isAddingBot, setIsAddingBot] = useState(false);
 
   const [showEditCategoryPopup, setShowEditCategoryPopup] = useState(false);
@@ -33,10 +35,11 @@ export function Conscious() {
   const [isSavingCategory, setIsSavingCategory] = useState(false);
 
   const [showEditBotPopup, setShowEditBotPopup] = useState(false);
+  // Expanded editBotData to include parasiticWords and character
   const [editBotData, setEditBotData] = useState({
     categoryId: '',
     original: null,
-    updated: { botName: '', botDescription: '', token: '', base: '' }
+    updated: { botName: '', botDescription: '', token: '', base: '', parasiticWords: '', character: '' }
   });
   const [isSavingBot, setIsSavingBot] = useState(false);
 
@@ -114,16 +117,17 @@ export function Conscious() {
 
   const openAddBotPopup = () => {
     if (!activeBotCategory) return;
-    setNewBotData(['', '', '', '']);
+    setNewBotData(['', '', '', '', '', '']);
     setShowAddBotPopup(true);
   };
 
   const closeAddBotPopup = () => {
     setShowAddBotPopup(false);
-    setNewBotData(['', '', '', '']);
+    setNewBotData(['', '', '', '', '', '']);
     setIsAddingBot(false);
   };
 
+  // Updated to handle all fields including parasiticWords and character
   const handleBotInputChange = (index, value) => {
     const updated = [...newBotData];
     updated[index] = value;
@@ -139,14 +143,22 @@ export function Conscious() {
       setIsAddingBot(false);
       return;
     }
+    // Validate required fields (e.g., botName)
+    if (!newBotData[0].trim()) {
+      alert(t('botNameRequired')); // Ensure you have this translation key
+      setIsAddingBot(false);
+      return;
+    }
     try {
       const categoryDocRef = doc(db, `Users/${user.uid}/Bots`, activeBotCategory);
       await updateDoc(categoryDocRef, {
         bots: arrayUnion({
-          botName: newBotData[0],
-          botDescription: newBotData[1],
-          token: newBotData[2],
-          base: newBotData[3]
+          botName: newBotData[0].trim(),
+          botDescription: newBotData[1].trim(),
+          token: newBotData[2].trim(),
+          base: newBotData[3].trim(),
+          parasiticWords: newBotData[4].trim(),
+          character: newBotData[5] // Assuming character is selected from predefined options
         })
       });
       setBotCategories((prev) =>
@@ -157,10 +169,12 @@ export function Conscious() {
                 bots: [
                   ...cat.bots,
                   {
-                    botName: newBotData[0],
-                    botDescription: newBotData[1],
-                    token: newBotData[2],
-                    base: newBotData[3]
+                    botName: newBotData[0].trim(),
+                    botDescription: newBotData[1].trim(),
+                    token: newBotData[2].trim(),
+                    base: newBotData[3].trim(),
+                    parasiticWords: newBotData[4].trim(),
+                    character: newBotData[5]
                   }
                 ]
               }
@@ -185,9 +199,13 @@ export function Conscious() {
     setIsSavingCategory(true);
     const auth = getAuth();
     const user = auth.currentUser;
-    if (!user) return;
+    if (!user) {
+      setIsSavingCategory(false);
+      return;
+    }
     if (!editCategoryData.id || !editCategoryData.name.trim()) {
       setShowEditCategoryPopup(false);
+      setIsSavingCategory(false);
       return;
     }
     try {
@@ -252,7 +270,9 @@ export function Conscious() {
                     b.botName === bot.botName &&
                     b.botDescription === bot.botDescription &&
                     b.token === bot.token &&
-                    b.base === bot.base
+                    b.base === bot.base &&
+                    b.parasiticWords === bot.parasiticWords &&
+                    b.character === bot.character
                   )
               )
             };
@@ -293,8 +313,17 @@ export function Conscious() {
     if (!editBotData.categoryId) return;
     const auth = getAuth();
     const user = auth.currentUser;
-    if (!user) return;
+    if (!user) {
+      setIsSavingBot(false);
+      return;
+    }
     const { categoryId, original, updated } = editBotData;
+    // Validate required fields (e.g., botName)
+    if (!updated.botName.trim()) {
+      alert(t('botNameRequired')); // Ensure you have this translation key
+      setIsSavingBot(false);
+      return;
+    }
     try {
       const docRef = doc(db, `Users/${user.uid}/Bots`, categoryId);
       await updateDoc(docRef, {
@@ -313,9 +342,11 @@ export function Conscious() {
                 (b) =>
                   !(
                     b.botName === original.botName &&
-                    b.botDescription === original.description &&
+                    b.botDescription === original.botDescription &&
                     b.token === original.token &&
-                    b.base === original.base
+                    b.base === original.base &&
+                    b.parasiticWords === original.parasiticWords &&
+                    b.character === original.character
                   )
               )
               .concat(updated)
@@ -323,13 +354,14 @@ export function Conscious() {
         })
       );
       setShowEditBotPopup(false);
-      setEditBotData({ categoryId: '', original: null, updated: {} });
+      setEditBotData({ categoryId: '', original: null, updated: { botName: '', botDescription: '', token: '', base: '', parasiticWords: '', character: '' } });
     } catch (e) {
       console.error(e);
       setIsSavingBot(false);
     }
   };
 
+  // Updated search to include parasiticWords and character
   const filteredBots = botCategories.flatMap((cat) =>
     cat.bots
       .filter(
@@ -337,7 +369,9 @@ export function Conscious() {
           b.botName.toLowerCase().includes(searchTerm.toLowerCase()) ||
           b.botDescription.toLowerCase().includes(searchTerm.toLowerCase()) ||
           b.token.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          b.base.toLowerCase().includes(searchTerm.toLowerCase())
+          b.base.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          b.parasiticWords.toLowerCase().includes(searchTerm.toLowerCase()) || // New Field
+          b.character.toLowerCase().includes(searchTerm.toLowerCase())        // New Field
       )
       .map((b) => ({ ...b, catId: cat.id, catName: cat.name }))
   );
@@ -359,6 +393,413 @@ export function Conscious() {
     <div className="bot-creation-header">
       <h1>{t('consciousnessTitle')}</h1>
       <p>{t('consciousnessDescription')}</p>
+      <div className="bot-creation-header">
+        <h1>{t('consciousnessTitle')}</h1>
+        <p>{t('consciousnessDescription')}</p>
+      </div>
+      <div className="bot-creation-content">
+        <div className="bot-category-selection">
+          <h1>{t('botCategoryTitle')}</h1>
+          <div className="category-button-group">
+            {botCategories.length === 0 && (
+              <p style={{ textAlign: 'center', color: '#9e9e9e' }}>{t('noCategories')}</p>
+            )}
+            {botCategories.map((category) => (
+              <div
+                key={category.id}
+                style={{ display: 'flex', alignItems: 'center', marginBottom: '5px' }}
+              >
+                <button
+                  className={activeBotCategory === category.id ? 'active' : ''}
+                  onClick={() => setActiveBotCategory(category.id)}
+                  style={{ flex: 1 }}
+                >
+                  {category.name}
+                </button>
+                <span
+                  style={{
+                    cursor: 'pointer',
+                    marginLeft: '5px',
+                    color: 'gray',
+                    fontSize: '1.3em'
+                  }}
+                  onClick={() => handleDeleteCategoryClick(category)}
+                  title={t('deletingConfirmationCategory')}
+                >
+                  -
+                </span>
+                <span
+                  style={{
+                    cursor: 'pointer',
+                    marginLeft: '10px',
+                    color: 'gray',
+                    fontSize: '1.3em'
+                  }}
+                  onClick={() => handleEditCategoryClick(category)}
+                  title={t('editCategoryTitle')}
+                >
+                  ✎
+                </span>
+              </div>
+            ))}
+            <button className="category-add-btn" onClick={openAddCategoryPopup}>
+              +
+            </button>
+          </div>
+        </div>
+        <div className="bot-table">
+          <div className="search-bar bot-search">
+            <img src="/icons/search.png" className="search-icon" alt="search" />
+            <input
+              type="text"
+              className="search-input"
+              placeholder={t('searchPlaceholder')}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          {searchTerm ? (
+            <div className="search-results-box">
+              {filteredBots.length > 0 ? (
+                filteredBots.map((bot, index) => (
+                  <p key={index} style={{ margin: '5px 0', color: '#333' }}>
+                    {bot.catName} → {bot.botName} ({bot.token})
+                  </p>
+                ))
+              ) : (
+                <p style={{ color: '#555' }}>{t('noResultsFound')}</p>
+              )}
+            </div>
+          ) : (
+            botCategories.map((category) =>
+              activeBotCategory === category.id ? (
+                <div key={category.id} className="category-table">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>{t('botNamePlaceholder')}</th>
+                        <th>{t('botDescriptionPlaceholder')}</th>
+                        <th>{t('tokenPlaceholder')}</th>
+                        <th>{t('basePlaceholder')}</th>
+                        <th>{t('parasiticWordsTitle')}</th> {/* New Header */}
+                        <th>{t('characterTitle')}</th>         {/* New Header */}
+                        <th>{t('actions')}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {category.bots.map((bot, index) => {
+                        const shortDesc =
+                          bot.botDescription && bot.botDescription.length > 20
+                            ? bot.botDescription.slice(0, 20) + '...'
+                            : bot.botDescription || '—';
+                        const shortBase =
+                          bot.base && bot.base.length > 20
+                            ? bot.base.slice(0, 20) + '...'
+                            : bot.base || '—';
+                        const shortParasiticWords =
+                          bot.parasiticWords && bot.parasiticWords.length > 20
+                            ? bot.parasiticWords.slice(0, 20) + '...'
+                            : bot.parasiticWords || '—';
+                        const shortCharacter =
+                          bot.character && bot.character.length > 20
+                            ? bot.character.slice(0, 20) + '...'
+                            : bot.character || '—';
+                        return (
+                          <tr key={index}>
+                            <td>{bot.botName || '—'}</td>
+                            <td>
+                              {shortDesc}{' '}
+                              {bot.botDescription && bot.botDescription.length > 20 && (
+                                <span
+                                  className="show-details-icon"
+                                  onClick={() =>
+                                    openDetailPopup(t('fullDescription'), bot.botDescription)
+                                  }
+                                >
+                                  📝
+                                </span>
+                              )}
+                            </td>
+                            <td>{bot.token || '—'}</td>
+                            <td>
+                              {shortBase}{' '}
+                              {bot.base && bot.base.length > 20 && (
+                                <span
+                                  className="show-details-icon"
+                                  onClick={() => openDetailPopup(t('fullBase'), bot.base)}
+                                >
+                                  📝
+                                </span>
+                              )}
+                            </td>
+                            <td>
+                              {shortParasiticWords}{' '}
+                              {bot.parasiticWords && bot.parasiticWords.length > 20 && (
+                                <span
+                                  className="show-details-icon"
+                                  onClick={() =>
+                                    openDetailPopup(t('fullParasiticWords'), bot.parasiticWords)
+                                  }
+                                >
+                                  📝
+                                </span>
+                              )}
+                            </td>
+                            <td>
+                              {shortCharacter}{' '}
+                              {bot.character && bot.character.length > 20 && (
+                                <span
+                                  className="show-details-icon"
+                                  onClick={() =>
+                                    openDetailPopup(t('fullCharacter'), bot.character)
+                                  }
+                                >
+                                  📝
+                                </span>
+                              )}
+                            </td>
+                            <td>
+                              <span
+                                className="delete-bot-icon"
+                                onClick={() => handleDeleteBotClick(category.id, bot)}
+                                title={t('deletingConfirmationBot')}
+                              >
+                                -
+                              </span>
+                              <span
+                                className="edit-bot-icon"
+                                onClick={() => handleEditBotClick(category.id, bot)}
+                                title={t('editBotTitle')}
+                              >
+                                ✎
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                  {category.bots.length === 0 && (
+                    <p style={{ textAlign: 'center', color: '#9e9e9e' }}>{t('noBots')}</p>
+                  )}
+                </div>
+              ) : null
+            )
+          )}
+          {activeBotCategory && !searchTerm && (
+            <button className="create-bot-btn" onClick={openAddBotPopup}>
+              {t('createBotButton')}
+            </button>
+          )}
+        </div>
+      </div>
+      {/* Add Category Popup */}
+      {showAddCategoryPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h2>{t('addCategoryPopupTitle')}</h2>
+            <input
+              type="text"
+              placeholder={t('addCategoryPlaceholder')}
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+            />
+            <div className="popup-buttons">
+              <button onClick={handleAddCategory} disabled={isAddingCategory}>
+                {isAddingCategory ? t('addingText') : t('addButtonText')}
+              </button>
+              <button onClick={closeAddCategoryPopup}>{t('cancelButtonText')}</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Add Bot Popup */}
+      {showAddBotPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h2>{t('addBotPopupTitle')}</h2>
+            <div className="bot-input-group">
+              <input
+                type="text"
+                placeholder={t('botNamePlaceholder')}
+                value={newBotData[0]}
+                onChange={(e) => handleBotInputChange(0, e.target.value)}
+              />
+              <textarea
+                placeholder={t('botDescriptionPlaceholder')}
+                value={newBotData[1]}
+                onChange={(e) => handleBotInputChange(1, e.target.value)}
+                style={{ minHeight: '60px', resize: 'vertical' }}
+              />
+              <input
+                type="text"
+                placeholder={t('tokenPlaceholder')}
+                value={newBotData[2]}
+                onChange={(e) => handleBotInputChange(2, e.target.value)}
+              />
+              <textarea
+                placeholder={t('basePlaceholder')}
+                value={newBotData[3]}
+                onChange={(e) => handleBotInputChange(3, e.target.value)}
+                style={{ minHeight: '60px', resize: 'vertical' }}
+              />
+              {/* New Fields */}
+              <input
+                type="text"
+                placeholder={t('parasiticWordsPlaceholder')}
+                value={newBotData[4]}
+                onChange={(e) => handleBotInputChange(4, e.target.value)}
+              />
+              <select
+                value={newBotData[5]}
+                onChange={(e) => handleBotInputChange(5, e.target.value)}
+              >
+                <option value="">{t('selectCharacterPlaceholder')}</option>
+                <option value="Good">{t('characterGood')}</option>
+                <option value="Evil">{t('characterEvil')}</option>
+                <option value="Passive">{t('characterPassive')}</option>
+                <option value="Active">{t('characterActive')}</option>
+              </select>
+            </div>
+            <div className="popup-buttons">
+              <button onClick={addBotToCategory} disabled={isAddingBot}>
+                {isAddingBot ? t('addingText') : t('addButtonText')}
+              </button>
+              <button onClick={closeAddBotPopup}>{t('cancelButtonText')}</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Edit Category Popup */}
+      {showEditCategoryPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h2>{t('editCategoryTitle')}</h2>
+            <input
+              type="text"
+              placeholder={t('addCategoryPlaceholder')}
+              value={editCategoryData.name}
+              onChange={(e) =>
+                setEditCategoryData((prev) => ({ ...prev, name: e.target.value }))
+              }
+            />
+            <div className="popup-buttons">
+              <button onClick={handleSaveEditedCategory} disabled={isSavingCategory}>
+                {isSavingCategory ? t('savingText') : t('saveButtonText')}
+              </button>
+              <button onClick={() => setShowEditCategoryPopup(false)}>{t('cancelButtonText')}</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Edit Bot Popup */}
+      {showEditBotPopup && editBotData.original && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h2>{t('editBotTitle')}</h2>
+            <div className="bot-input-group">
+              <input
+                type="text"
+                placeholder={t('botNamePlaceholder')}
+                value={editBotData.updated.botName}
+                onChange={(e) => handleEditBotFieldChange('botName', e.target.value)}
+              />
+              <textarea
+                placeholder={t('botDescriptionPlaceholder')}
+                value={editBotData.updated.botDescription}
+                onChange={(e) => handleEditBotFieldChange('botDescription', e.target.value)}
+                style={{ minHeight: '60px', resize: 'vertical' }}
+              />
+              <input
+                type="text"
+                placeholder={t('tokenPlaceholder')}
+                value={editBotData.updated.token}
+                onChange={(e) => handleEditBotFieldChange('token', e.target.value)}
+              />
+              <textarea
+                placeholder={t('basePlaceholder')}
+                value={editBotData.updated.base}
+                onChange={(e) => handleEditBotFieldChange('base', e.target.value)}
+                style={{ minHeight: '60px', resize: 'vertical' }}
+              />
+              {/* New Fields */}
+              <input
+                type="text"
+                placeholder={t('parasiticWordsPlaceholder')}
+                value={editBotData.updated.parasiticWords}
+                onChange={(e) => handleEditBotFieldChange('parasiticWords', e.target.value)}
+              />
+              <select
+                value={editBotData.updated.character}
+                onChange={(e) => handleEditBotFieldChange('character', e.target.value)}
+              >
+                <option value="">{t('selectCharacterPlaceholder')}</option>
+                <option value="Good">{t('characterGood')}</option>
+                <option value="Evil">{t('characterEvil')}</option>
+                <option value="Passive">{t('characterPassive')}</option>
+                <option value="Active">{t('characterActive')}</option>
+              </select>
+            </div>
+            <div className="popup-buttons">
+              <button onClick={saveEditedBot} disabled={isSavingBot}>
+                {isSavingBot ? t('savingText') : t('saveButtonText')}
+              </button>
+              <button
+                onClick={() => {
+                  setShowEditBotPopup(false);
+                  setEditBotData({
+                    categoryId: '',
+                    original: null,
+                    updated: { botName: '', botDescription: '', token: '', base: '', parasiticWords: '', character: '' }
+                  });
+                }}
+              >
+                {t('cancelButtonText')}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Confirm Delete Popup */}
+      {confirmDelete && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            {confirmDelete.type === 'category' ? (
+              <>
+                <h2>{t('deletingConfirmationCategory')}</h2>
+                <p>{t('deleteConfirmationTextCategory').replace('{{categoryName}}', confirmDelete.data.name)}</p>
+              </>
+            ) : (
+              <>
+                <h2>{t('deletingConfirmationBot')}</h2>
+                <p>{t('deleteConfirmationTextBot').replace('{{botName}}', confirmDelete.data.bot.botName)}</p>
+              </>
+            )}
+            <div className="popup-buttons">
+              <button onClick={confirmDeleteAction}>{t('yesButtonText')}</button>
+              <button onClick={cancelDeleteAction}>{t('noButtonText')}</button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Detail Popup */}
+      {showDetailPopup && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h2>{detailTitle}</h2>
+            <div className="bot-input-group">
+              <textarea
+                value={detailContent}
+                readOnly
+                style={{ minHeight: '150px', resize: 'vertical' }}
+              />
+            </div>
+            <div className="popup-buttons">
+              <button onClick={closeDetailPopup}>{t('closeButtonText')}</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
     <div className="bot-creation-content">
       <div className="bot-category-selection">

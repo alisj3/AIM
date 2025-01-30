@@ -1,3 +1,5 @@
+/* pref.css */
+
 .preferences-window{
     display: none;
 }
@@ -28,9 +30,6 @@
 .preferences-window{
     width: 100%;
     padding: 30px;
-}
-
-.preferences-window{
     color: #1E293B;
 }
 
@@ -102,12 +101,11 @@
     padding-left: 10px;
 }
 
-
 .switch { 
-    position : relative ;
-    display : inline-block;
-    width : 40px;
-    height : 24px;
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 24px;
     background-color: #eee;
     border-radius: 20px;
 }
@@ -125,14 +123,15 @@
 }
 
 .checkbox:checked + .switch::after {
-    left : 18px; 
+    left: 18px; 
 }
+
 .checkbox:checked + .switch {
     background-color: #000000;
 }
 
 .checkbox { 
-    display : none;
+    display: none;
 }
 
 .security-instruction{
@@ -238,7 +237,7 @@
 
 .card-cancel{
     background-color: transparent;
-    border: 2px solid #CBD5E1;
+    border: 2px solid #CBD5DC;
     color: #475569;
     font-weight: 600;
     transition: all 0.4s;
@@ -305,6 +304,7 @@
     cursor: pointer;
 }
   
+
 .infoModalStyles{
     background-color: #ebebeb;
     text-align: center;
@@ -331,4 +331,33 @@
 
 .last-enter-info{
     padding-top: 30px;
+}
+
+/* Базовые стили для кнопки "Сохранить" */
+.save-button {
+  position: absolute; /* Изменено с fixed на absolute */
+  bottom: auto;
+  right: 270px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+  background-color: #333;
+}
+
+.save-button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+/* Дополнительный класс для кастомного позиционирования кнопки "Сохранить" */
+.save-button-custom {
+  right: 250px; /* Отступ от правого края */
 }

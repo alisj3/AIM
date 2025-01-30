@@ -1,0 +1,138 @@
+.integrations-container {
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 10px;
+}
+
+.integrations-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+.integration-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.integration-item {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  width: 200px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.integration-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.integration-item img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 15px;
+}
+
+.integration-item h3 {
+  margin: 10px 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.integration-item p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Popup Styles */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(128, 128, 128, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup {
+  background: #fff;
+  border-radius: 8px;
+  padding: 25px;
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popup h3 {
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+  color: #333;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.popup-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.popup-actions button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.popup-actions button:first-child {
+  background-color: #000;
+  color: #fff;
+}
+
+.popup-actions button:first-child:hover {
+  background-color: #333;
+}
+
+.popup-actions button:last-child {
+  background-color: #000;
+  color: #fff;
+}
+
+.popup-actions button:last-child:hover {
+  background-color: #333;
+}
+
+.popup-actions button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

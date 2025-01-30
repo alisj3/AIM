@@ -18,6 +18,8 @@ import { ConsciousPage } from "./pages/ConsciousPage";
 import { SupportPage } from "./pages/SupportPage";
 import { ContactsPage } from "./pages/ContactsPage";
 import { NotificationProvider } from "./components/Notification/NotificationContext";
+import { IntegrationsPage } from "./pages/IntegrationsPage";
+
 
 function App() {
   return (
@@ -37,11 +39,11 @@ function App() {
             <Route path="/conscious" element={<ConsciousPage />} />
             <Route path="/support" element={<SupportPage />} />
             <Route path="/contacts" element={<ContactsPage />} />
+            <Route path="/integrations" element={<IntegrationsPage />} />
           </Routes>
         </BrowserRouter>
       </Suspense>         
     </NotificationProvider>
-   
     </>
   )
 }
