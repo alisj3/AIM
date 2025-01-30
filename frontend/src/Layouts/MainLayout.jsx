@@ -7,7 +7,6 @@ import { signOut } from "firebase/auth";
 import { useTranslation } from "react-i18next";
 import { ToastContainer, toast } from 'react-toastify';
 import { useNotifications } from "../components/Notification/NotificationContext";
-import { useNavigate } from "react-router-dom";
 
 export function MainLayout({ children }) {
     const { t } = useTranslation();
