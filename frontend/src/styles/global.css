@@ -17,6 +17,21 @@ a {
     text-decoration: none;
 }
 
-.Toastify__toast-container--top-right {
-    top: 100px !important;
+.Toastify__toast{
+    margin: 10px;
 }
+  
+  .layout-right-toast {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+  }
+
+.Toastify__toast-container--top-right {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  background-color: #d8d8d8;
+  border-radius: 10px;
+}
+

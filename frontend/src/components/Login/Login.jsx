@@ -166,11 +166,6 @@ export function Login() {
                     placeholder={t("LoginPassword")}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <input
-                    type="password"
-                    className="input-field"
-                    placeholder={t("LoginCheckPassword")}
-                />
                 <button className="login-button">{t("LoginEnter")}</button>
                 <Link to="/register" className="forgot-password">{t("LoginNoAccount")}?</Link>
                 <p className="login-p-2">{t("LoginOr")}</p>

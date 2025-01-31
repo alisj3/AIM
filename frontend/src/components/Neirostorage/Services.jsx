@@ -16,7 +16,7 @@ import {
 import { getAuth } from 'firebase/auth'
 import { useTranslation } from 'react-i18next'
 
-export function Neirostorage() {
+export function Services() {
   const { t } = useTranslation()
   const [categories, setCategories] = useState([])
   const [activeTable, setActiveTable] = useState('')
@@ -61,7 +61,7 @@ export function Neirostorage() {
     const user = auth.currentUser
     if (!user) return
     try {
-      const userProductsCollection = collection(db, `Users/${user.uid}/Products`)
+      const userProductsCollection = collection(db, `Users/${user.uid}/Services`)
       const querySnapshot = await getDocs(userProductsCollection)
       const userCategories = []
       querySnapshot.forEach((docItem) => {
@@ -107,7 +107,7 @@ export function Neirostorage() {
       return
     }
     try {
-      const userProductsCollection = collection(db, `Users/${user.uid}/Products`)
+      const userProductsCollection = collection(db, `Users/${user.uid}/Services`)
       const docRef = await addDoc(userProductsCollection, {
         name: newCategoryName.trim(),
         products: []
@@ -158,7 +158,7 @@ export function Neirostorage() {
     const left = unitNum - soldUnitsNum;
 
     try {
-      const tableDocRef = doc(db, `Users/${user.uid}/Products`, activeTable)
+      const tableDocRef = doc(db, `Users/${user.uid}/Services`, activeTable)
       await updateDoc(tableDocRef, {
         products: arrayUnion({
           name: name.trim(),
@@ -274,7 +274,7 @@ export function Neirostorage() {
     const category = categories.find((c) => c.id === categoryId)
     setConfirmDelete({
       type: 'category',
-      data: { id: categoryId, name: category?.name || 'Категория' }
+      data: { id: categoryId, name: category?.name || 'Сервисы' }
     })
   }
 
@@ -293,13 +293,13 @@ export function Neirostorage() {
     try {
       if (confirmDelete.type === 'category') {
         const { id } = confirmDelete.data
-        const docRef = doc(db, `Users/${user.uid}/Products`, id)
+        const docRef = doc(db, `Users/${user.uid}/Services`, id)
         await deleteDoc(docRef)
         setCategories((prev) => prev.filter((cat) => cat.id !== id))
         if (activeTable === id) setActiveTable('')
       } else if (confirmDelete.type === 'product') {
         const { categoryId, product } = confirmDelete.data
-        const tableDocRef = doc(db, `Users/${user.uid}/Products`, categoryId)
+        const tableDocRef = doc(db, `Users/${user.uid}/Services`, categoryId)
         await updateDoc(tableDocRef, {
           products: arrayRemove(product)
         })
@@ -371,7 +371,7 @@ export function Neirostorage() {
     if (!user) return
     const { categoryId, original, updated } = editProductData
     try {
-      const tableDocRef = doc(db, `Users/${user.uid}/Products`, categoryId)
+      const tableDocRef = doc(db, `Users/${user.uid}/Services`, categoryId)
       await updateDoc(tableDocRef, {
         products: arrayRemove(original)
       })
@@ -420,7 +420,7 @@ export function Neirostorage() {
       return
     }
     try {
-      const docRef = doc(db, `Users/${user.uid}/Products`, editCategoryData.id)
+      const docRef = doc(db, `Users/${user.uid}/Services`, editCategoryData.id)
       await updateDoc(docRef, {
         name: editCategoryData.name.trim()
       })
@@ -439,7 +439,7 @@ export function Neirostorage() {
 
   const renderCategories = () => {
     if (categories.length === 0) {
-      return <p style={{ textAlign: 'center', color: '#9e9e9e' }}>Нет категорий</p>
+      return <p style={{ textAlign: 'center', color: '#9e9e9e' }}>Нет сервисов</p>
     }
     return categories.map((category) => (
       <div className="category-item" key={category.id}>
@@ -452,14 +452,14 @@ export function Neirostorage() {
         <span
           style={{ color: 'gray', cursor: 'pointer', fontSize: '1.3em', marginLeft: '5px' }}
           onClick={() => handleDeleteCategoryClick(category.id)}
-          title="Удалить категорию"
+          title="Удалить сервис"
         >
           -
         </span>
         <span
           style={{ color: 'gray', cursor: 'pointer', fontSize: '1.3em', marginLeft: '5px' }}
           onClick={() => handleEditCategoryClick(category)}
-          title="Редактировать категорию"
+          title="Редактировать сервис"
         >
           ✎
         </span>
@@ -475,7 +475,7 @@ export function Neirostorage() {
       </div>
       <div className="neirostorage-container">
         <div className="table-title">
-          <h1>{t('NeurostorageCategiries')}</h1>
+          <h1>{t('NeurostorageServices')}</h1>
           <div className="button-group">
             {renderCategories()}
             <button className="add-category-button" onClick={handleOpenAddCategoryPopup}>
@@ -597,10 +597,10 @@ export function Neirostorage() {
       {showAddCategoryPopup && (
         <div className="popup-overlay">
           <div className="popup-content">
-            <h2>Новая категория</h2>
+            <h2>Новый Сервис</h2>
             <input
               type="text"
-              placeholder="Введите название категории"
+              placeholder="Введите название сервиса"
               value={newCategoryName}
               onChange={(e) => setNewCategoryName(e.target.value)}
             />
@@ -707,8 +707,8 @@ export function Neirostorage() {
           <div className="popup-content">
             {confirmDelete.type === 'category' ? (
               <>
-                <h2>Удалить категорию?</h2>
-                <p>Вы действительно хотите удалить категорию «{confirmDelete.data.name}»?</p>
+                <h2>Удалить сервис?</h2>
+                <p>Вы действительно хотите удалить сервис «{confirmDelete.data.name}»?</p>
               </>
             ) : (
               <>
@@ -783,10 +783,10 @@ export function Neirostorage() {
       {showEditCategoryPopup && (
         <div className="popup-overlay">
           <div className="popup-content">
-            <h2>Редактировать категорию</h2>
+            <h2>Редактировать сервис</h2>
             <input
               type="text"
-              placeholder="Название категории"
+              placeholder="Название сервиса"
               value={editCategoryData.name}
               onChange={(e) => setEditCategoryData({ ...editCategoryData, name: e.target.value })}
             />

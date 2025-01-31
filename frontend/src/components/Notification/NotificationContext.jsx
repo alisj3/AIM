@@ -7,6 +7,7 @@ const NotificationContext = createContext();
 // Custom Hook
 export const useNotifications = () => useContext(NotificationContext);
 
+
 export const NotificationProvider = ({ children }) => {
   const showNotification = (message, type = "default", icon = null) => {
     toast(

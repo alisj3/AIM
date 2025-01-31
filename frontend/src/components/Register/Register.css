@@ -20,6 +20,10 @@
     border-radius: 4px;
     font-size: 14px;
   }
+
+  .input-field option{
+    color: #000;
+  }
   
   .register-button {
     width: 100%;

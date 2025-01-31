@@ -14,6 +14,8 @@ export function Register() {
     const [address, setAddress] = useState("")
     const [country, setCountry] = useState("")
     const [password, setPassword] = useState("")
+    const [companyName, setCompanyName] = useState("")
+    const [service, setService] = useState("")
 
     const countries = [
       "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", 
@@ -68,10 +70,12 @@ export function Register() {
                     email: user.email,
                     address: address,
                     country: country,
+                    companyName: companyName,
                     name: name,
                     surname: surname,
                     phone: phone,
                     birth: birth,
+                    service: service
                 })
             }
             
@@ -88,12 +92,31 @@ export function Register() {
       <p className="register-p">Создайте учетную запись</p>
 
       <form className="register-form" onSubmit={handleRegister}>
+          <input 
+          type="text"
+          className="input-field"
+          placeholder="Наименование Компании" 
+          onChange={(e) => setCompanyName(e.target.value)}
+          required/>
+
+          <select
+              className="input-field"
+              value={service}
+              onChange={(e) => setService(e.target.value)}
+              placeholder="Предостовляемые Услуши"
+              required
+          >
+            <option value="Service">Услуги</option>
+            <option value="Product">Товары</option>
+          </select>
+
         <div className="" style={{display: "flex", }}>
             <input
             type="text"
             className="input-field"
             placeholder="Имя"
             onChange={(e) => setName(e.target.value)}
+            required
             />
 
             <input
@@ -101,6 +124,7 @@ export function Register() {
             className="input-field"
             placeholder="Фамилия"
             onChange={(e) => setSurname(e.target.value)}
+            required
             />
         </div>
 
@@ -110,12 +134,14 @@ export function Register() {
             className="input-field"
             placeholder="Номер телефона"
             onChange={(e) => setPhone(e.target.value)}
+            required
             />
             <input
             type="date"
             className="input-field custom-date-input"
             placeholder="Дата Рождения"
             onChange={(e) => setBirth(e.target.value)}
+            required
             />
         </div>
 
@@ -124,6 +150,7 @@ export function Register() {
           className="input-field"
           placeholder="Почта"
             onChange={(e) => setEmail(e.target.value)}
+            required
         />
         <div className=""  style={{display: "flex", }}>
             <input
@@ -131,6 +158,7 @@ export function Register() {
             className="input-field"
             placeholder="Адресс"
             onChange={(e) => setAddress(e.target.value)}
+            required
             />
 
             <select
@@ -138,6 +166,7 @@ export function Register() {
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 placeholder="Страна Проживания"
+                required
             >
                 <option value="">Select a country</option>
                 {countries.map((countryName, index) => (
@@ -153,6 +182,7 @@ export function Register() {
           className="input-field"
           placeholder="Пароль"
             onChange={(e) => setPassword(e.target.value)}
+            required
         />
         <input
           type="password"

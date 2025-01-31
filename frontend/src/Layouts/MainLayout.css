@@ -212,6 +212,23 @@ body {
     background: #f0f0f0;
 }
 
+.company-name{
+    text-align: center;
+    font-size: 1.2rem; 
+    font-weight: bold;
+    color: #e4e4e4; 
+    text-align: center; 
+    letter-spacing: 0.5px; 
+    text-transform: uppercase;
+    line-height: 1.5;
+
+    background: linear-gradient(135deg, #467997, #13438b);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    width: 80%;
+    margin: 20px auto;
+}
 
 @media(max-width: 1024px) {
 

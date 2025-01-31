@@ -5,8 +5,10 @@ import { auth, db } from '../firebase/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { signOut } from "firebase/auth";
 import { useTranslation } from "react-i18next";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast, Zoom  } from 'react-toastify';
 import { useNotifications } from "../components/Notification/NotificationContext";
+
+import "react-toastify/dist/ReactToastify.css";
 
 export function MainLayout({ children }) {
     const { t } = useTranslation();
@@ -16,6 +18,7 @@ export function MainLayout({ children }) {
     const [isRightSidebarVisible, setIsRightSidebarVisible] = useState(false);
     const [showNotificationWindow, setShowNotificationWindow] = useState(false)
     const [notifications, setNotifications] = useState([]);
+    const [companyName, setCompanyName] = useState(localStorage.getItem('companyName') || '')
 
     const currentPath = window.location.pathname;
     
@@ -24,6 +27,8 @@ export function MainLayout({ children }) {
             await signOut(auth);
             localStorage.removeItem('userDetails');
             localStorage.removeItem('categories');
+            localStorage.removeItem('userName');
+            localStorage.removeItem('companyName');
             localStorage.setItem('loginNotificationShown', 'false');
             window.location.href = "/login";
         } catch (error) {
@@ -40,28 +45,6 @@ export function MainLayout({ children }) {
         }
     };
 
-    const fetchUserName = async () => {
-        if (!userName) { 
-            auth.onAuthStateChanged(async (user) => {
-                if (user) {
-                    try {
-                        const docRef = doc(db, 'Users', user.uid);
-                        const docSnap = await getDoc(docRef);
-                        if (docSnap.exists()) {
-                            const fetchedName = docSnap.data().name;
-                            setUserName(fetchedName);
-                            localStorage.setItem('userName', fetchedName);
-                        } else {
-                            console.error('No user document found');
-                        }
-                    } catch (error) {
-                        console.error('Error fetching user data:', error);
-                    }
-                }
-            });
-        }
-    };
-
     const showNotificationWondow = () => {
         setShowNotificationWindow(prevState => !prevState)
     }
@@ -72,7 +55,6 @@ export function MainLayout({ children }) {
     };
 
     useEffect(() => {
-        fetchUserName();
         if (localStorage.getItem('loginNotificationShown') !== 'true') {
             notify("You are logged in!", "success");
             localStorage.setItem('loginNotificationShown', 'true');
@@ -82,12 +64,41 @@ export function MainLayout({ children }) {
     }, []);
     
 
+    useEffect(() => {
+        const fetchUserName = async () => {
+            if (!userName) { 
+                auth.onAuthStateChanged(async (user) => {
+                    if (user) {
+                        try {
+                            const docRef = doc(db, 'Users', user.uid);
+                            const docSnap = await getDoc(docRef);
+                            if (docSnap.exists()) {
+                                const fetchedName = docSnap.data().name;
+                                const fetchCompanyName = docSnap.data().companyName;
+                                setUserName(fetchedName);
+                                setCompanyName(fetchCompanyName)
+                                localStorage.setItem('userName', fetchedName);
+                                localStorage.setItem('companyName', fetchCompanyName)
+                            } else {
+                                console.error('No user document found');
+                            }
+                        } catch (error) {
+                            console.error('Error fetching user data:', error);
+                        }
+                    }
+                });
+            }
+        };
+        fetchUserName()
+    }, [])
+
     return (
         <>
             <div className="layout-main">
                 {/* Left Sidebar */}
                 <div className={`layout-left ${isLeftSidebarVisible ? 'visible' : 'hidden'}`}>
                     <Link to="/"><img className="layout-logo" src="/logo.png" alt="" /></Link>
+                    <p className='company-name'>{companyName}</p>
                     <div className="nav">
                         <Link to="/profile" className={`link ${currentPath === '/profile' ? 'active' : ''}`}>
                             <img src="/icons/wallet.png" alt="" />
@@ -176,18 +187,20 @@ export function MainLayout({ children }) {
                     </div>
                     
                     <div className="layout-right-toast">
-                        <div className="layout-right-toast">
-                                
                         {showNotificationWindow && notifications.length > 0 ? (
                             notifications.map((notification, index) => (
-                                <div key={index} className="toast-notification">
-                                    {showNotification(notification.message, notification.type)}
-                                </div>
+                            <div key={index} className="toast-notification">
+                                {showNotification(notification.message, notification.type)}
+                            </div>
                             ))
-                        ) : toast.dismiss()}
-                        
-                            <ToastContainer toastClassName="toast" />    
-                        </div>
+                        ) : (
+                            toast.dismiss() // Dismissing the toast if no notifications
+                        )}
+
+                        <ToastContainer
+                            toastClassName="toast"
+                            transition={Zoom} // Keep the slide transition for individual toasts
+                        />
                     </div>
 
                     
